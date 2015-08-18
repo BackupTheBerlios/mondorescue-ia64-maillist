@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] mindi: where is makefile.parted2fdisk?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2013-June/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20mindi%3A%20where%20is%20makefile.parted2fdisk%3F&In-Reply-To=%3C20130608135043.GA21169%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000079.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] mindi: where is makefile.parted2fdisk?</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20mindi%3A%20where%20is%20makefile.parted2fdisk%3F&In-Reply-To=%3C20130608135043.GA21169%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] mindi: where is makefile.parted2fdisk?">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Sat Jun  8 15:50:44 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000079.html">[Mondorescue-ia64] mindi: where is makefile.parted2fdisk?
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#80">[ date ]</a>
+              <a href="thread.html#80">[ thread ]</a>
+              <a href="subject.html#80">[ subject ]</a>
+              <a href="author.html#80">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello
+
+[I also received it on the other address :-]
+
+Ellis, Robert (MODIS,CFE) said on Fri, Jun 07, 2013 at 05:34:31PM +0000:
+&gt;<i> I'm trying to build mindi because I don't want to pollute the development environment of the system that I'm trying to archive. 
+</I>
+I do not have so many ia64 users BTW. The last time I made tests there
+were still issues at restore time due to the keyboard not active, but I
+think I may have fixed it (with another issue) so worth trying again.
+
+&gt;<i> The instructions say:
+</I>&gt;<i> 
+</I>&gt;<i> make -f Makefile.parted2fdisk
+</I>&gt;<i> make -f Makefile.parted2fdisk install
+</I>&gt;<i> mv rootfs/sbin/parted2fdisk-ia64 rootfs/sbin/parted2fdisk
+</I>
+Sorry, I realized these are obsolete. The perl script is not compiled
+anymore (was too complex) and is now used directly at restore time by
+the embedded perl program in the boot part.
+
+&gt;<i> (My goal is to use mondoarchive to clone a SD1 rhel installation onto a c7000 ia64 blade.)
+</I>
+Hummm, I think it's an interesting try ;-) Let me know how you progress,
+and feel free to contact me privately if you need to give more
+confidential details; If not the ML is nice as it also serve for others.
+
+Best regards,
+Bruno.
+-- 
+Open Source &amp; Linux Profession Lead EMEA         <A HREF="http://opensource.hp.com">http://opensource.hp.com</A>
+EMEA Open Source HPISC Chief Technologist        <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+FLOSS projects:     <A HREF="http://mondorescue.org">http://mondorescue.org</A>     <A HREF="http://project-builder.org">http://project-builder.org</A> 
+Musique ancienne? <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000079.html">[Mondorescue-ia64] mindi: where is makefile.parted2fdisk?
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#80">[ date ]</a>
+              <a href="thread.html#80">[ thread ]</a>
+              <a href="subject.html#80">[ subject ]</a>
+              <a href="author.html#80">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Mondoarchive%20fails%0A%20withnewt-specific.c-%3Efatal_error&In-Reply-To=%3C20110407083853.GO29229%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Mondoarchive%20fails%0A%20withnewt-specific.c-%3Efatal_error&In-Reply-To=%3C20110407083853.GO29229%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Thu Apr  7 10:38:53 CEST 2011</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ravi Kumar said on Wed, Mar 30, 2011 at 10:53:35AM +0400:
+
+&gt;<i> Tried passing console=ttyS0 while booting with mondorescue image, but still unable to access keyboard from MP console.
+</I>
+Ok. So now hte right value needs to be found. You could try other ttyS1
+or ttyS2, as well as tty0, tty1, ... I really don't know how this mode
+is seen from busybox :-(
+
+BTW the param is serial=ttyS0 not console !
+
+&gt;<i> Moreover for IA64 systems, mondo boot CD is not able to boot directly from CDROM, if we run the commands manually from EFI then it works.
+</I>
+Hummm, could you elaborate more here ?
+You mean that from the menu you can't boot the mondo CD, whereas you can
+from th EFI prompt ?
+
+&gt;<i> Actually in ./mindi/deplist.d/base.conf:/usr/bin/bzip2 and ./mindi/deplist.d/base.conf:/bin/bzip2  are by default included in mindi, but still getting uncompressing issue.
+</I>
+I'd need to have some screenshots or log file here to be able to help.
+
+&gt;<i> There is one more issue on IA64 platform that, partition sizes are changing and asking to correct it (only with LVM??).
+</I>
+Maybe the version you use is old. What are you using ?
+
+Bruno.
+-- 
+Open Source &amp; Linux Profession Lead EMEA           / <A HREF="http://opensource.hp.com">http://opensource.hp.com</A>
+HP/Intel/Red Hat Open Source Solutions Initiative  / <A HREF="http://www.hpintelco.net">http://www.hpintelco.net</A>
+<A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>  <A HREF="http://mondorescue.org">http://mondorescue.org</A> <A HREF="http://project-builder.org">http://project-builder.org</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

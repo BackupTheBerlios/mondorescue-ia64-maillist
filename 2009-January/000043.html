@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R:  R:  R: Recovery from tape KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B0196882A%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000041.html">
+   <LINK REL="Next"  HREF="000045.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R:  R:  R: Recovery from tape KO(OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B0196882A%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] R:  R:  R: Recovery from tape KO(OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Fri Jan 16 21:00:42 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000041.html">[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000045.html">[Mondorescue-ia64] R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#43">[ date ]</a>
+              <a href="thread.html#43">[ thread ]</a>
+              <a href="subject.html#43">[ subject ]</a>
+              <a href="author.html#43">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Da: Bruno Cornec [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">Bruno.Cornec at hp.com</A>] 
+</I>&gt;<i> Inviato: mercoled&#236; 14 gennaio 2009 15.45
+</I>&gt;<i> A: Grassi Giuseppe
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+</I>&gt;<i> Oggetto: Re: [Mondorescue-ia64] R: R: Recovery from tape KO(OBDR)
+</I>&gt;<i> 
+</I>&gt;<i> Grassi Giuseppe said on Mon, Jan 12, 2009 at 04:32:24PM +0100:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; An Alert pop-up window apperas whith:
+</I>&gt;<i> &gt;                 &#166; Mountlist analyzed. Result: &quot;2 MB            &#166;
+</I>&gt;<i> &gt;                 &#166; over-allocated on /dev/cciss/c0d0.           &#166;
+</I>&gt;<i> &gt;                 &#166; &quot; Switch to Interactive Mode?  
+</I>&gt;<i> 
+</I>&gt;<i> Of course I already met that one. In general, just removing 2 
+</I>&gt;<i> MB on one part makes the trick, but here we go into the 
+</I>&gt;<i> interactive issue again :-( and thus no interface. 
+</I>&gt;<i> 
+</I>&gt;<i> I don't know where to fond more info on how to debug this, 
+</I>&gt;<i> even after long hours of google search and read :-( Will have 
+</I>&gt;<i> to try again as this is really blocking
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Use of uninitialized value in formline at 
+</I>&gt;<i> /sbin/parted2fdisk line 369.
+</I>&gt;<i> &gt; Use of uninitialized value in formline at 
+</I>&gt;<i> /sbin/parted2fdisk line 359.
+</I>&gt;<i> &gt; Use of uninitialized value in formline at 
+</I>&gt;<i> /sbin/parted2fdisk line 359.
+</I>&gt;<i> 
+</I>&gt;<i> Interesting.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Mountlist analyzed. Result: &quot;2 MB over-allocated on 
+</I>&gt;<i> /dev/cciss/c0d0.  
+</I>&gt;<i> &gt; &quot; Switch t In Attach the /var/log/mondorestore.log  file
+</I>&gt;<i> 
+</I>&gt;<i> Is this true ?:
+</I>&gt;<i> Disk /dev/cciss/c0d0 was 998 MB; is now 139979 MB; factor = 140.259521
+</I>
+In the mondoarchive log file (see following) the lvm size detected is 0 MB (/dev/cciss/c0d0p2  lvm  lvm  0)
+but I think is it not correct. The &quot;df -m&quot; output is:
+Filesystem           1M-blocks      Used Available Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00
+                         19686      2835     15852  16% /
+/dev/cciss/c0d0p1          999         7       992   1% /boot/efi
+none                      2009         0      2009   0% /dev/shm
+/dev/mapper/VolGroup00-LogVol03
+                          4946        42      4652   1% /home
+/dev/mapper/VolGroup00-LogVol04
+                          1008        34       924   4% /tmp
+/dev/mapper/VolGroup00-LogVol02
+                          4946       171      4524   4% /var
+
+mondoarchive log file:
+
+Your mountlist will look like this:
+-----------------------------------
+        DEVICE          MOUNTPOINT      FORMAT          SIZE (MB)       LABEL/UUID
+Use of uninitialized value in pattern match (m//) at /usr/sbin/parted2fdisk line 514, &lt;PARTED&gt; line 1.
+Examining /dev/cciss/c0d0p2 (mount=lvm fmt=lvm psz=-1)
+        /dev/cciss/c0d0p2 lvm             lvm                   0
+Examining /dev/VolGroup00/LogVol00 (mount=/ fmt=ext3 psz=lvm)
+        /dev/VolGroup00/LogVol00 /               ext3                lvm
+Use of uninitialized value in pattern match (m//) at /usr/sbin/parted2fdisk line 514, &lt;PARTED&gt; line 1.
+Examining /dev/cciss/c0d0p1 (mount=/boot/efi fmt=vfat psz=1021972)
+        /dev/cciss/c0d0p1 /boot/efi       vfat                998 /boot/efi
+Examining /dev/VolGroup00/LogVol03 (mount=/home fmt=ext3 psz=lvm)
+        /dev/VolGroup00/LogVol03 /home           ext3                lvm
+Examining /dev/VolGroup00/LogVol04 (mount=/tmp fmt=ext3 psz=lvm)
+        /dev/VolGroup00/LogVol04 /tmp            ext3                lvm
+Examining /dev/VolGroup00/LogVol02 (mount=/var fmt=ext3 psz=lvm)
+        /dev/VolGroup00/LogVol02 /var            ext3                lvm
+Examining /dev/VolGroup00/LogVol01 (mount=swap fmt=swap psz=lvm)
+        /dev/VolGroup00/LogVol01 swap            swap                lvm
+/dev/cciss/c0d0p2 lvm lvm -1
+/dev/VolGroup00/LogVol00 / ext3 lvm
+/dev/cciss/c0d0p1 /boot/efi vfat 1021972 /boot/efi
+/dev/VolGroup00/LogVol03 /home ext3 lvm
+/dev/VolGroup00/LogVol04 /tmp ext3 lvm
+/dev/VolGroup00/LogVol02 /var ext3 lvm
+/dev/VolGroup00/LogVol01 swap swap lvm
+16536   //mondo.scratch.17767/mondo.scratch.5300/images/all.tar.gz
+
+&gt;<i> 
+</I>&gt;<i> I've found a difference in the way computation is done at 
+</I>&gt;<i> compute time and check time and I have fixed it (Cf:
+</I>&gt;<i> <A HREF="http://trac.mondorescue.org/changeset/2125">http://trac.mondorescue.org/changeset/2125</A>). You could try 
+</I>&gt;<i> that. I'm also rebuilding beta versions of 2.2.8 in order to 
+</I>&gt;<i> help people tests those new fixes. The rhel-5 src.rpm is on its way to
+</I>&gt;<i> <A HREF="ftp://ftp.mondorescue.org/test/rhel/5">ftp://ftp.mondorescue.org/test/rhel/5</A>
+</I>&gt;<i> 
+</I>&gt;<i> Bruno.
+</I>&gt;<i> -- 
+</I>&gt;<i> Linux Profession Lead EMEA  / Open Source Evangelist \        
+</I>&gt;<i> HP C&amp;I EMEA IET
+</I>&gt;<i> <A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  
+</I>&gt;<i> <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+</I>&gt;<i> Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      
+</I>&gt;<i> <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+</I>&gt;<i> La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> 
+</I>&gt;<i> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+</I>&gt;<i> 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000041.html">[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000045.html">[Mondorescue-ia64] R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#43">[ date ]</a>
+              <a href="thread.html#43">[ thread ]</a>
+              <a href="subject.html#43">[ subject ]</a>
+              <a href="author.html#43">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

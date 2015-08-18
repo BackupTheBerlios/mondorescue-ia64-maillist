@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] Recovery from tape KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C20090107140000.GM9854%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000036.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] Recovery from tape KO(OBDR)</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C20090107140000.GM9854%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] Recovery from tape KO(OBDR)">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Wed Jan  7 15:00:00 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000036.html">[Mondorescue-ia64] R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#35">[ date ]</a>
+              <a href="thread.html#35">[ thread ]</a>
+              <a href="subject.html#35">[ subject ]</a>
+              <a href="author.html#35">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+Grassi Giuseppe said on Mon, Dec 22, 2008 at 04:53:59PM +0100:
+
+&gt;<i> after having applied the changes (/usr/sbin/mindi):
+</I>&gt;<i> line 1689
+</I>&gt;<i> #   [ &quot;$CDRECOVERY&quot; = &quot;yes&quot; ] &amp;&amp; [ &quot;$TAPEDEV&quot; != &quot;&quot; ] &amp;&amp; Die &quot;Sorry, you
+</I>&gt;<i> can't use --cd-recovery and --write-tapes at the same time&quot;
+</I>&gt;<i> 
+</I>&gt;<i> The command:  mondoarchive -Oto -H -l ELILO -d /dev/st0  is accepted and
+</I>
+Ok. So I committed it upstream as well.
+
+&gt;<i> works but the restore is run in interactive mode yet: mondorestore -Z
+</I>&gt;<i> interactive -o -d /dev/nst0
+</I>
+Hummm. So there is still something wrong in the way mondorestore is
+called.
+Could you give me your /var/log/mondorestore.log file at that point, or
+if you can't at least the result of cat /proc/cmdline (all that at
+restore tim of course)
+
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Evangelist \        HP C&amp;I EMEA IET
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000036.html">[Mondorescue-ia64] R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#35">[ date ]</a>
+              <a href="thread.html#35">[ thread ]</a>
+              <a href="subject.html#35">[ subject ]</a>
+              <a href="author.html#35">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

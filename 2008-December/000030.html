@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO (OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%20from%20tape%20KO%20%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B018609FE%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000029.html">
+   <LINK REL="Next"  HREF="000032.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO (OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%20from%20tape%20KO%20%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B018609FE%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO (OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Mon Dec 15 14:31:15 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000029.html">[Mondorescue-ia64] R: R: R: R: Recovery from tape KO (OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000032.html">[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO	(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+using -H option at the backup time, the backup operation is aborted
+whith error:
+
+&quot;FATAL ERROR. Sorry, you can't use --cd-recovery and --write-tapes at
+the same time&quot;
+
+The backup command issued is: mondoarchive -Oto -H -l ELILO -d /dev/st0
+
+Mondoarchive.log and mindi.log are attacched.
+
+The procedure to able to use the tape reader again, is mandatory on x86
+too, when the tape has been put in OBDR mode to boot server.
+
+In fact, the tape is configured like CD-ROM, when boot server with tape
+drive set in OBDR mode:
+cat /proc/scsi/scsi:
+
+Attached devices:
+Host: scsi0 Channel: 00 Id: 03 Lun: 00
+  Vendor: HP       Model: C7438A           Rev: ZP76              
+  Type:   CD-ROM                           ANSI SCSI revision: 03
+Host: scsi3 Channel: 00 Id: 00 Lun: 00
+  Vendor: TEAC     Model: DV-28E-V         Rev: E.AK
+  Type:   CD-ROM                           ANSI SCSI revision: 02
+
+
+The first device is the tape drive DAT-72  HP Part Number: C7438A set in
+OBDR mode (Type CD-ROM)
+
+After boot and minimal linux kernel loaded, the mondorestore procedure
+(.../rootfs/sbin/init), try to read from tape but the tape drive is not
+present  (see boot.log.txt attached)
+
+
+
+After the Tape drive reconfiguration procedure, the tape drive HP C7438A
+is it again a normal tape (Sequential-Access) otherwise the command &quot;mt
+-d /dev/nst0 rewind&quot;, &quot;mt -d /dev/nst0 fsf 2&quot; don't work.
+
+ cat /proc/scsi/scsi:
+
+Attached devices:
+Host: scsi0 Channel: 00 Id: 03 Lun: 00
+  Vendor: HP       Model: C7438A           Rev: ZP76
+  Type:   Sequential-Access                ANSI SCSI revision: 03
+Host: scsi3 Channel: 00 Id: 00 Lun: 00
+  Vendor: TEAC     Model: DV-28E-V         Rev: E.AK
+  Type:   CD-ROM                           ANSI SCSI revision: 02
+
+Giuseppe
+
+-----Messaggio originale-----
+Da: Bruno Cornec [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">Bruno.Cornec at hp.com</A>] 
+Inviato: domenica 14 dicembre 2008 15.37
+A: Grassi Giuseppe
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+Oggetto: Re: R: [Mondorescue-ia64] R: R: R: Recovery from tape KO (OBDR)
+
+Grassi Giuseppe said on Fri, Dec 12, 2008 at 04:16:11PM +0100:
+
+&gt;<i> Afters load the kernel....run mindi.... I have reconfigured the tape
+</I>drive in non OBDR mode, in this way:
+&gt;<i> 
+</I>&gt;<i> 1) power cycle tape drive
+</I>&gt;<i> 2) from another shell (Alt+F2)
+</I>&gt;<i>    - echo &quot;scsi remove-single-device 1 0 3 0&quot; &gt; /proc/scsi/scsi
+</I>&gt;<i>    - modprobe st
+</I>&gt;<i>    - echo &quot;scsi add-single-device 1 0 3 0&quot; &gt; / proc/scsi/scsi
+</I>&gt;<i>    to reconfigure the tape drive in Sequencial-Access mode
+</I>
+Is it mandatory to be able to use the tape reader again ?
+I never had to do that on x86 machines.
+
+If yes, I want to capture that in the wiki.
+
+&gt;<i> 3) type:  /dev/nst0,  to continue mindi procedure
+</I>
+I think you should use /dev/st0 instead. Normally the n is added when
+needed by the scripts IIRC.
+
+&gt;<i> df: invalid option -- P
+</I>
+Ok, I added the inclusion of df in deplist.txt in order to have the
+right one at restore time. There are now multiple places where the -P
+option is used, so will be useful.
+
+&gt;<i> Other error is: &quot;touch: /boot/boot.b: No such file or directory&quot; ????
+</I>
+Fixed in revision  2085.
+
+&gt;<i> I have an other problem. The HP-RX family server use a vt100 terminal
+</I>console (serial console), not Graphic Display VGA so, when the above
+mondorestore  menu is displayed, on serial console, I am not able to
+select options.
+
+I have also had that problem. If I use the -H option at backup time, and
+activate the automatic restore, it does it fine. However, I was never
+able to handle the interactive stuf correctly, either using the physical
+console or the Management board (BMC/iLO).
+
+&gt;<i> Is this due to the loaded drivers for video and keyboard ? 
+</I>
+I think keyboard is working.
+I fear there are problems with newt for the interface support. But I
+tried finding info on that in the past for ia64 without any luck.
+
+Maybe forcing the console type could help.
+
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Evangelist \        HP C&amp;I
+EMEA IET
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \
+<A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>
+<A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A>
+<A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+
+Internet Email Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+-----------------------------------------------------------------------------------------------------
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: mondoarchive.zip
+Type: application/x-zip-compressed
+Size: 8852 bytes
+Desc: mondoarchive.zip
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20081215/8b59258b/attachment.bin">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20081215/8b59258b/attachment.bin</A>&gt;
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: boot.log.txt
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20081215/8b59258b/attachment.txt">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20081215/8b59258b/attachment.txt</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000029.html">[Mondorescue-ia64] R: R: R: R: Recovery from tape KO (OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000032.html">[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO	(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

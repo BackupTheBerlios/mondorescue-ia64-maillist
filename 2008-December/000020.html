@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] Recovery  from  tape KO (OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Recovery%20%20from%20%20tape%20KO%20%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B017F4DB5%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000022.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] Recovery  from  tape KO (OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Recovery%20%20from%20%20tape%20KO%20%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B017F4DB5%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] Recovery  from  tape KO (OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Tue Dec  2 15:10:28 CET 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000022.html">[Mondorescue-ia64] Recovery  from  tape KO (OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20">[ date ]</a>
+              <a href="thread.html#20">[ thread ]</a>
+              <a href="subject.html#20">[ subject ]</a>
+              <a href="author.html#20">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+ 
+I have this situation:
+ 
+Server: HP RX2660 (Itanium) 
+OS    : Linux Red Hat 5.1
+Tape Drive: HP Model: C7438A with OBDR function
+ 
+I have downloaded from mondorescue:
+- mindi-2.0.4-1.rhel5.src.rpm
+- mindi-busybox-1.7.3-1.rhel5.src.rpm
+- mondo-2.2.7-1.rhel5.src.rpm
+- afio-2.4.7-1.ia64.rpm
+- buffer-1.19-1.ia64.rpm
+ 
+Compiled all src:
+- rpmbuild -ba /usr/src/*/SPECS/mondo.spec
+- rpmbuild -ba /usr/src/*/SPECS/mindi.spec
+- rpmbuild -ba /usr/src/*/SPECS/mindi-busybox.spec
+ 
+and installed all rpm:
+- rpm -ivh /DVD/3PTY/afio-2.4.7-1.ia64.rpm
+- rpm -ivh /DVD/3PTY/buffer-1.19-1.ia64.rpm
+- rpm -ivh /usr/src/*/RPMS/*/mondo*.*.rpm /usr/src/*/RPMS/*/mindi*.*.rpm
+ 
+Then I have run the backup operation (OBDR):
+# mondoarchive -Oto -l ELILO -d /dev/st0
+ 
+At the end of backup with No errors, I try to exec the recovery
+operation so I put the tape drive in OBDR mode but the magnetc tape
+(with backup) is automatically expelled.
+ 
+the tape drive correctly works.  I am sure because the same tape drive
+has been used for the mondorescue recovery on ProLiant server with
+success.
+ 
+I suspect that the problem is the boot file
+/var/cache/mindi/mondorescue.iso, because the file is too small:
+ 
+-rw-r--r-- 1 root root 34816 Dec  2 12:38 mondorescue.iso
+ 
+Can someone help me ?
+ 
+I attach the mondoarchive.log file.
+ 
+Thanks
+
+
+Internet Email Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+-----------------------------------------------------------------------------------------------------
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20081202/d34d262b/attachment.html">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20081202/d34d262b/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: mondoarchive.log
+Type: application/octet-stream
+Size: 169893 bytes
+Desc: mondoarchive.log
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20081202/d34d262b/attachment.obj">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20081202/d34d262b/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000022.html">[Mondorescue-ia64] Recovery  from  tape KO (OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20">[ date ]</a>
+              <a href="thread.html#20">[ thread ]</a>
+              <a href="subject.html#20">[ subject ]</a>
+              <a href="author.html#20">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

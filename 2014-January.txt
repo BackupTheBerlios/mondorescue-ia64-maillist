@@ -1,0 +1,23 @@
+From glen62 at hotmail.com  Fri Jan 10 14:45:40 2014
+From: glen62 at hotmail.com (Glen Yu)
+Date: Fri, 10 Jan 2014 08:45:40 -0500
+Subject: [Mondorescue-ia64] Can't find syslinux rpm for SLES 10
+In-Reply-To: <BLU172-W43473F761BE0CAAD9E1C99CBB30@phx.gbl>
+References: <BLU172-W43473F761BE0CAAD9E1C99CBB30@phx.gbl>
+Message-ID: <BLU172-W4486653CE28DF60031D895CBB30@phx.gbl>
+
+Hi All
+
+
+
+
+I get below error when I install Mondo at my SLES 10 for IA64. Anyone knows where I can get this package?
+   error: Failed dependencies:        syslinux is needed by mindi-1.2.4-1.sles10.ia64
+
+Thanks
+
+Glen 		 	   		   		 	   		  
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20140110/8412303e/attachment.html>
+

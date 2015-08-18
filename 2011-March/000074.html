@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] Mondoarchive fails	withnewt-specific.c-&gt;fatal_error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Mondoarchive%20fails%0A%09withnewt-specific.c-%3Efatal_error&In-Reply-To=%3CF422B7644326BD49B6F019E3EE423CDC026DCF20%40dxbmail.emitac.co.ae%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000073.html">
+   <LINK REL="Next"  HREF="000075.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] Mondoarchive fails	withnewt-specific.c-&gt;fatal_error</H1>
+    <B>Ravi Kumar</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Mondoarchive%20fails%0A%09withnewt-specific.c-%3Efatal_error&In-Reply-To=%3CF422B7644326BD49B6F019E3EE423CDC026DCF20%40dxbmail.emitac.co.ae%3E"
+       TITLE="[Mondorescue-ia64] Mondoarchive fails	withnewt-specific.c-&gt;fatal_error">Ravi_kumar at emitac.ae
+       </A><BR>
+    <I>Mon Mar 28 20:51:31 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000073.html">[Mondorescue-ia64] Mondoarchive fails	with	newt-specific.c-&gt;fatal_error
+</A></li>
+        <LI>Next message: <A HREF="000075.html">[Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dear Dean,
+
+ 
+
+Thanks for your mail.
+
+ 
+
+Actually there are 2 rx3600 servers and I am trying on both of them. One server were able to take backup, but in the time of restore, it gives with bzip2 not found. Since its RHEL, bzip2, gzip are placed in /usr/bin, but mindi is trying on /bin/bzip2.
+
+ 
+
+Can I copy the /usr/bin/bzip2 to /bin? Will it work ? I tried with gzip as compression option, but gzip also got into restore issue.
+
+ 
+
+In another node, unable to take backup at all due to newt issue. Is there any solution for newt issue?
+
+ 
+
+I have one more issue with rx7640 server, which doesn&#8217;t have vga and usb port and using MP console, unable to access keyboard. Is there any solution for accessing keyboard with MP console?
+
+ 
+
+Thanks once again for help.
+
+ 
+
+Regards
+
+Ravi
+
+ 
+
+From: Lester, Dean C (ASM Orlando) [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">dean.lester at hp.com</A>] 
+Sent: Monday, March 28, 2011 5:02 PM
+To: Ravi Kumar; <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+Subject: RE: [Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error
+
+ 
+
+Hi Ravi,
+
+ 
+
+According to your earlier message to the list, you did get (a different system?) to create an archive, but can&#8217;t get it to restore because of the newt problem. More on that shortly.
+
+ 
+
+This system you indicate you&#8217;re unable to create the archive.
+
+ 
+
+I do see in your mindi.log:
+
+WARNING - /bin/bunzip2 does not exist; cannot be LDD'd.
+
+/bin/bzip2
+
+WARNING - /bin/bzip2 does not exist; cannot be LDD'd.
+
+Which you have acknowledged in your earlier post. Be sure you have bzip installed, it is a dependency.
+
+ 
+
+But also, in your mondoarchive.log:
+
+tar: dev/cciss/c0d0: time stamp 2011-03-27 23:31:17 is 12342 s in the future
+
+tar: dev/cciss/c0d0p1: time stamp 2011-03-27 23:31:17 is 12342 s in the future
+
+tar: dev/cciss/c0d0p2: time stamp 2011-03-27 23:31:17 is 12342 s in the future
+
+.................................................Unable to handle [extra module file not found]
+
+Everything is moving along fine until you hit that message, and then everything seems to go poorly after that. You may want to check the timestamp of that device file against your system clock, it may be that this check is causing your failure.
+
+ 
+
+However, even if you get the archive to create, it seems there is a problem with the recovery on ia64, that you have discovered on your other system. I have seen this problem with &#8216;newt&#8217; on my systems as well. I&#8217;ve been trading messages with Bruno Cornec on this but haven&#8217;t seen any update from him lately.
+
+ 
+
+Thanks, and good luck!
+
+ 
+
+ 
+
+Dean Lester
+
+
+Ravi Kumar | Sr. Systems Engineer - Enterprise Solutions
+Emitac Enterprise Solutions
+T:+971 4 605 8100 Ext: 1145
+F:+971 4 605 8241
+M:+971 50 254 4826
+<A HREF="http://www.emitac.ae">http://www.emitac.ae</A>
+________________________________________________________________________________________________ 
+This e-mail is the property of Emitac Group. It is intended only for the person or entity to which it is addressed and may contain information that is privileged, confidential or otherwise protected from disclosure. The unauthorized use, distribution, copying or alteration of this email, including the attachments, is strictly forbidden. If you are not the intended recipient, please contact the sender by reply email and destroy all copies of the original message and any attachments. To reply to our email administrator directly, please send an email to mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">ithelpdesk at emitac.ae.</A> Please note that Emitac does not accept any responsibility for viruses and it is your responsibility to scan the email and attachments (if any).
+P Please consider the environment before printing this email.
+________________________________
+
+No virus found in this message.
+Checked by AVG - www.avg.com
+Version: 10.0.1204 / Virus Database: 1498/3535 - Release Date: 03/28/11
+
+________________________________
+
+No virus found in this message.
+Checked by AVG - www.avg.com
+Version: 10.0.1204 / Virus Database: 1498/3535 - Release Date: 03/28/11
+
+
+ 
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20110328/39903a20/attachment.html">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20110328/39903a20/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000073.html">[Mondorescue-ia64] Mondoarchive fails	with	newt-specific.c-&gt;fatal_error
+</A></li>
+	<LI>Next message: <A HREF="000075.html">[Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

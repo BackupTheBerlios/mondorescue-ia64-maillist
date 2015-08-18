@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B01ABDA44%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000054.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape KO(OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B01ABDA44%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape KO(OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Tue Mar  3 12:44:31 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000054.html">[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape	KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Bruno,
+the test of parted2fdisk.pl patch is not OK. The file tested by mondorestore (for string &quot; (m &quot;) isn't /tmp/parted2fdisk.log but /tmp/fdisk.log. In the file attached, I have applied the modification for write in /tmp/fdisk.log.
+
+Other modifications was necessary to traslate correctly commands fdisk -&gt; parted. See comments in parted2fdisk.pl attached.
+
+An other modification is necessary in /sbin/post-init in order to
+- eliminate the error (touch: cannot touch `/boot/boot.b': No such file or directory) 
+- to use the serial terminal vt100 or remote serial console on Itanium server for mondorestore interactive mode
+
+post-init file after line 8:
+
+mkdir /boot # (touch /boot/boot.b)
+# Determine on which arch we're running
+arch=`uname -m`
+if [ $arch == 'ia64' ]; then
+ln -s -f /dev/ttyS0 /dev/tty
+fi
+#
+
+With above modifications (parted2fdisk and post-init), the recovery system procedure is completed with success.
+In attach the mondorestore.log and parted2fdisk.log files
+
+There is an other error but isn't a problem. The boot partition, created fat32, after files restoring becomes fat16. I have not understood the why.
+
+Giuseppe
+
+
+&gt;<i> Da: Bruno Cornec [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">Bruno.Cornec at hp.com</A>] 
+</I>&gt;<i> Inviato: mercoled&#236; 18 febbraio 2009 23.31
+</I>&gt;<i> A: Grassi Giuseppe
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+</I>&gt;<i> Oggetto: Re: R: R: R: [Mondorescue-ia64] R: R: Recovery from 
+</I>&gt;<i> tape KO(OBDR)
+</I>&gt;<i> 
+</I>&gt;<i> Hello Guiseppe,
+</I>&gt;<i> 
+</I>&gt;<i> Grassi Giuseppe said on Tue, Feb 17, 2009 at 08:48:32PM +0100:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I have found a wrong check in mondorestore 
+</I>&gt;<i> &gt; (mondo-prep.c-&gt;partition-device#1844
+</I>&gt;<i> &gt; The test for parted2fdisk is not correct.  ?
+</I>&gt;<i> 
+</I>&gt;<i> True. I wonder I could come accross and restore my system 
+</I>&gt;<i> without that ?
+</I>&gt;<i> 
+</I>&gt;<i> I'm proposing the following patch which is easier for you to 
+</I>&gt;<i> apply and test as it only concerns parted2fdisk.pl Hopefully 
+</I>&gt;<i> it should fix that animaly and the other one on putting the 
+</I>&gt;<i> right type to the disk.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; The &quot; (m &quot; substring is not present in last line of 
+</I>&gt;<i> /tmp/fdisk.log file but this is normal because that string is 
+</I>&gt;<i> present only when /sbin/fdisk command is used but on ia64 
+</I>&gt;<i> architecture the linux command used is /sbin/parted via 
+</I>&gt;<i> parted2fdisk perl script.
+</I>&gt;<i> 
+</I>&gt;<i> Yep. So now I'm generating that line in the log ;-)
+</I>&gt;<i> 
+</I>&gt;<i> Cf: <A HREF="http://trac.mondorescue.org/changeset/2154">http://trac.mondorescue.org/changeset/2154</A>
+</I>&gt;<i> 
+</I>&gt;<i> Bruno.
+</I>&gt;<i> -- 
+</I>&gt;<i> Linux Profession Lead EMEA  / Open Source Ambassador \   EMEA 
+</I>&gt;<i> CME SoL. Center
+</I>&gt;<i> <A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  
+</I>&gt;<i> <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+</I>&gt;<i> Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      
+</I>&gt;<i> <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+</I>&gt;<i> La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> 
+</I>&gt;<i> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+</I>&gt;<i> 
+</I>
+
+Internet Email Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+-----------------------------------------------------------------------------------------------------
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: mondorestore.log
+Type: application/octet-stream
+Size: 191171 bytes
+Desc: mondorestore.log
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090303/c819cfb7/attachment.obj">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090303/c819cfb7/attachment.obj</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: parted2fdisk.log
+Type: application/octet-stream
+Size: 11578 bytes
+Desc: parted2fdisk.log
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090303/c819cfb7/attachment-0001.obj">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090303/c819cfb7/attachment-0001.obj</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: parted2fdisk.pl
+Type: application/octet-stream
+Size: 16718 bytes
+Desc: parted2fdisk.pl
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090303/c819cfb7/attachment-0002.obj">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090303/c819cfb7/attachment-0002.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000054.html">[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape	KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

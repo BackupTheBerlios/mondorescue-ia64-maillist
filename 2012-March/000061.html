@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.0.1331735326.6126.mondorescue-ia64%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.0.1331735326.6126.mondorescue-ia64%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 15:28:45 CET 2012</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#61">[ date ]</a>
+              <a href="thread.html#61">[ thread ]</a>
+              <a href="subject.html#61">[ subject ]</a>
+              <a href="author.html#61">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>partition, not a full disk, so I trusted that and handled the parameter
+as a partition, so now my parted2fdisk doesn't return the correct info
+for -s if it's indeed a full disk !
+
+So I'll have to add disk support to the -s option as well. And handle
+the cciss syntax at the same time. Hope to be able to work on this
+tomorrow morning.
+
+&gt;<i> There is other little errors: 
+</I>&gt;<i> 
+</I>&gt;<i> /usr/lib/mindi/analyze-my-lvm  at the line 236:
+</I>&gt;<i> lvmversion=`lvmdiskscan --help 2&gt;&amp;1 |     (--help option is not correct)
+</I>&gt;<i> lvmversion=`lvmdiskscan --version 2&gt;&amp;1 |   (correct line)
+</I>
+Fixed in rev 2170.
+<A HREF="http://trac.mondorescue.org/changeset/2170">http://trac.mondorescue.org/changeset/2170</A>
+
+&gt;<i> /usr/sbin/mindi at the line 726:
+</I>&gt;<i> vdf -P | grep -E '/vmfs/volumes' | awk '{print $1}'   (wrong command vdf)
+</I>
+You should never go there, as this is VMWare only ! 
+(The check is made on /vmfs/volumes which only exists on VMWare to my
+knowledge).
+
+Greetings,
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Ambassador \   EMEA CME Sol. Center
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#61">[ date ]</a>
+              <a href="thread.html#61">[ thread ]</a>
+              <a href="subject.html#61">[ subject ]</a>
+              <a href="author.html#61">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

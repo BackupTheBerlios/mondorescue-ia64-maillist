@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C20090121134229.GK32729%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000042.html">
+   <LINK REL="Next"  HREF="000037.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C20090121134229.GK32729%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Wed Jan 21 14:42:29 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000042.html">[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000037.html">[Mondorescue-ia64] Mondorescue for ia64 Debian 3.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Grassi Giuseppe said on Fri, Jan 16, 2009 at 08:13:16PM +0100:
+
+&gt;<i> &gt; Ok. So I already have a problem to solve here, as nuke 
+</I>&gt;<i> &gt; keyword is not mentioned nor RESTORE :-( (which should be 
+</I>&gt;<i> &gt; there when using -H) You used -H with mondoarchive don't you 
+</I>&gt;<i> &gt; ? I don't really see how you do not get the RESTORE parameter 
+</I>&gt;<i> &gt; if you used -H, so I'll also need your mondoarchive.log to 
+</I>&gt;<i> &gt; help solve that issue please.
+</I>&gt;<i> 
+</I>&gt;<i> Yes I have run mondoarchive with -H option (mondoarchive -Oto -H -l ELILO -d /dev/st0). Mondoarchive log is attached (Mondoarchive.log_120109.txt)
+</I>
+Ok. So I'll have to ask you another service as there is nothing wrong in
+your log, I need to understantd what mindi is doing on your system to
+find and hopefully fix that bug.
+
+Could you edit your /usr/sbin/mindi script and add near the begining a
+set -x line ?
+
+E.g.:
+
+[...]
+set -x
+### Which arch are we on (useful for ia64 port)
+ARCH=`/bin/uname -m`
+[...]
+
+And send to me the resulting mondoarchive.log again please ?
+
+&gt;<i> No, I have tried with /dev/st0  but doesn't function, mondorestore doesn't adds the 'n':
+</I>&gt;<i> output captured on vt100 console during recovery operation from tape:
+</I>
+Well I meant that mondo will add the 'n' later on, when it needs to not
+rewind the tape. Now, for your HW combination it seems that you need it
+also at the start, which is strange, but as I never tested it, may well
+be needed in your case.
+
+
+&gt;<i>          From an other shell (ALT+F2) I have submitted: 
+</I>&gt;<i>          echo &quot;scsi remove-single-device 1 0 3 0&quot; &gt; /proc/scsi/scsi
+</I>&gt;<i>          reset tape (power cycle)
+</I>&gt;<i>          echo &quot;scsi add-single-device 1 0 3 0&quot; &gt; /proc/scsi/scsi
+</I>
+I'll add that to the wiki, as again I had never seen that before myself
+(the OBDR tape I use for my tests on a Proliant system doesn't require
+that manipulation.
+
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Evangelist \        HP C&amp;I EMEA IET
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000042.html">[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000037.html">[Mondorescue-ia64] Mondorescue for ia64 Debian 3.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] Buffer rpm build is failing for x86_64
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Buffer%20rpm%20build%20is%20failing%20for%20x86_64&In-Reply-To=%3CAA7AE337A20DE14ABEEAB007DBEAB73F052E00CC%40BLR-EC-MBX05.wipro.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000066.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] Buffer rpm build is failing for x86_64</H1>
+    <B>ashish.mangla at wipro.com</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Buffer%20rpm%20build%20is%20failing%20for%20x86_64&In-Reply-To=%3CAA7AE337A20DE14ABEEAB007DBEAB73F052E00CC%40BLR-EC-MBX05.wipro.com%3E"
+       TITLE="[Mondorescue-ia64] Buffer rpm build is failing for x86_64">ashish.mangla at wipro.com
+       </A><BR>
+    <I>Wed Jul 15 03:59:49 CEST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000066.html">[Mondorescue-ia64] Buffer rpm build is failing for x86_64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#65">[ date ]</a>
+              <a href="thread.html#65">[ thread ]</a>
+              <a href="subject.html#65">[ subject ]</a>
+              <a href="author.html#65">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+ 
+
+I am trying to build x86_64 rpm from buffer-1.19.1.src.rpm, which I have
+taken from <A HREF="ftp://ftp.mondorescue.org/src">ftp://ftp.mondorescue.org/src</A>   . But somehow it is failing
+in compilation
+
+ 
+
+I get the following error and warning
+
+ 
+
+gcc -Wall -O2 -fomit-frame-pointer -pipe   -c -o buffer.o buffer.c
+
+buffer.c:131: error: conflicting types for 'shmat'
+
+/usr/include/sys/shm.h:58: error: previous declaration of 'shmat' was
+here
+
+buffer.c: In function 'main':
+
+buffer.c:273: warning: implicit declaration of function 'exit'
+
+buffer.c:273: warning: incompatible implicit declaration of built-in
+function 'e
+xit'
+
+buffer.c: In function 'parse_args':
+
+buffer.c:296: warning: implicit declaration of function 'atoi'
+
+buffer.c: In function 'buffer_allocate':
+
+buffer.c:514: warning: format '%08x' expects type 'unsigned int', but
+argument 4
+has type 'char *'
+
+buffer.c:519: warning: implicit declaration of function 'bzero'
+
+buffer.c:519: warning: incompatible implicit declaration of built-in
+function 'b
+zero'
+
+buffer.c: In function 'fill_block':
+
+buffer.c:694: warning: incompatible implicit declaration of built-in
+function 'b
+zero'
+
+buffer.c: In function 'byee':
+
+buffer.c:873: warning: incompatible implicit declaration of built-in
+function 'e
+xit'
+
+buffer.c:877: warning: incompatible implicit declaration of built-in
+function 'e
+xit'
+
+make: *** [buffer.o] Error 1
+
+error: Bad exit status from /var/tmp/rpm-tmp.59848 (%build)
+
+ 
+
+RPM build errors:
+
+    Bad exit status from /var/tmp/rpm-tmp.59848 (%build)
+
+ 
+
+The x86_64 rpm available on <A HREF="ftp://ftp.mondorescue.org/rhel/5">ftp://ftp.mondorescue.org/rhel/5</A> has
+dependencies on older version of libc.so.6. So if I can get some rpm
+which doesn't have this dependency or some source rpm which compile, It
+would be really helpful.
+
+ 
+
+Thanks in advance
+
+ 
+
+Regards,
+
+Ashish Mangla
+
+
+Please do not print this email unless it is absolutely necessary. 
+
+The information contained in this electronic message and any attachments to this message are intended for the exclusive use of the addressee(s) and may contain proprietary, confidential or privileged information. If you are not the intended recipient, you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately and destroy all copies of this message and any attachments. 
+
+WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email. 
+
+www.wipro.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090715/c323dbd5/attachment.html">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090715/c323dbd5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000066.html">[Mondorescue-ia64] Buffer rpm build is failing for x86_64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#65">[ date ]</a>
+              <a href="thread.html#65">[ thread ]</a>
+              <a href="subject.html#65">[ subject ]</a>
+              <a href="author.html#65">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

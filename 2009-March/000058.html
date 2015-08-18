@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R: R: R: R: R: R: R:	Recovery	fromtapeKO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%0A%09Recovery%09fromtapeKO%28OBDR%29&In-Reply-To=%3C20090318122556.GP29148%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000057.html">
+   <LINK REL="Next"  HREF="000059.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R: R: R: R: R: R: R:	Recovery	fromtapeKO(OBDR)</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%0A%09Recovery%09fromtapeKO%28OBDR%29&In-Reply-To=%3C20090318122556.GP29148%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] R: R: R: R: R: R: R: R:	Recovery	fromtapeKO(OBDR)">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Wed Mar 18 13:25:56 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000057.html">[Mondorescue-ia64] R: R: R: R: R: R: R: R: Recovery fromtapeKO(OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000059.html">[Mondorescue-ia64] R: R: R: R: R: R: R: R: R:	RecoveryfromtapeKO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#58">[ date ]</a>
+              <a href="thread.html#58">[ thread ]</a>
+              <a href="subject.html#58">[ subject ]</a>
+              <a href="author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Giuseppe,
+
+Thanks for coming back with the right info !
+
+How are you dealing with the updates I provide to you ? I see in your
+log:
+init (from mindi vPBVER-rPBREV)
+Which could imply that you're workign from SVN directly, without
+packaging ? is it the case ? 
+Just curious (and could also have impact on the way it works)
+
+And maybe it could be easier for your to rpmbuild --rebuild the .src.rpm
+of 2.2.9 rather than to apply selected patches, but I let you decide of
+course.
+
+Grassi Giuseppe said on Mon, Mar 16, 2009 at 04:29:01PM +0100:
+
+&gt;<i> &gt; On my side I have that:
+</I>&gt;<i> &gt; $ perl -c mindi/parted2fdisk.pl
+</I>&gt;<i> &gt; mindi/parted2fdisk.pl syntax OK
+</I>&gt;<i> 
+</I>&gt;<i> Perl compilation log is attached.
+</I>
+Ok, so your perl installation seems really special to me. strict.pm is
+part of perl since years now. Here I have:
+
+&gt;<i> locate strict.pm
+</I>/home/rinse/centos/4/x86_64/usr/lib/perl5/5.8.5/strict.pm (local CentOS 4 chroot)
+/home/rinse/centos/5/x86_64/usr/lib/perl5/5.8.8/strict.pm (local CentOS 5 chroot)
+/usr/lib/perl5/5.10.0/strict.pm  (Local Mandriva 2009.0 version)
+
+Could you try to see on your system if you can find any strict.pm ?
+Also check the result of rpm -ql perl | grep -i strict
+
+I don't understand why you don't have it.
+
+&gt;<i> OK in mondo-2.2.9-1.rhel4 &quot;touch /boot/boot.b&quot; is not present.
+</I>&gt;<i> OK  &quot;init&quot; in changeset 2163 
+</I>
+OK, some good news then.
+
+&gt;<i> OK with mondo-2.2.9-1 rhel4, format-and-kludge-vfat is present but doesn't work correctly
+</I>
+Ah. Progress is often done step by step ;-)
+
+&gt;<i> I think sed command is not correct for cciss disks. Drive will be /dev/cciss/c0d0  not/dev/cciss/cd0p1. sed command is correct in case of scsi direct attached disk: /dev/scsi/sda1 but is not correct for smartarray controller disks
+</I>
+In fact, that has been fixed elsewhere, but of course not there as that
+script wasn't really used it seem. Will look at it and come back to you.
+
+&gt;<i> &gt; &gt; a
+</I>&gt;<i> &gt; &gt; 00
+</I>&gt;<i> &gt; &gt; part=00
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Ok, so mondorestore doesn't pass the correct value to 
+</I>&gt;<i> &gt; parted2fdisk. It's clear from that log portion :-( I need to 
+</I>&gt;<i> &gt; find why if you can call it with -K99 that may help.
+</I>&gt;<i> 
+</I>&gt;<i> In attach the mondorestore.log run with -K99 option
+</I>
+Great I see where the problem is. May I ask again for 2 additional tests
+please:
+
+First run mindi --makemountlist /tmp/mountlist.txt to create that file
+and then
+sh -x /usr/local/share/mondo/restore-scripts/mondo/make-me-bootable /tmp/mountlist.txt dummy
+
+And send me the result of this execution please. This is where the &quot;00&quot;
+is created.
+
+Thanks again for your help.
+Best regards,
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Ambassador \   EMEA CME Sol. Center
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000057.html">[Mondorescue-ia64] R: R: R: R: R: R: R: R: Recovery fromtapeKO(OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000059.html">[Mondorescue-ia64] R: R: R: R: R: R: R: R: R:	RecoveryfromtapeKO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#58">[ date ]</a>
+              <a href="thread.html#58">[ thread ]</a>
+              <a href="subject.html#58">[ subject ]</a>
+              <a href="author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B018DB2BE%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000036.html">
+   <LINK REL="Next"  HREF="000041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B018DB2BE%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Mon Jan 12 16:32:24 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000036.html">[Mondorescue-ia64] R: Recovery from tape KO(OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000041.html">[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#38">[ date ]</a>
+              <a href="thread.html#38">[ thread ]</a>
+              <a href="subject.html#38">[ subject ]</a>
+              <a href="author.html#38">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I have tried to by-pass the problem forcing the mondorestore start in  nuke mode in this way:
+
+Modify the line 157 of /usr/lib/mindi/rootfs/sbin/post-init script:
+      mondorestore -Z interactive $mondoopt     (old line)
+      mondorestore -Z nuke $mondoopt            (new line)
+
+Then I have executed:
+- backup operation on tape (mondoarchive -Oto -H -l ELILO -d /dev/st0)
+- boot from tape (OBDR)
+
+So the mondorestore starts in nuke mode but a new problem is appeared.
+
+An Alert pop-up window apperas whith:
+                &#166;                                              &#166;
+                &#166; Mountlist analyzed. Result: &quot;2 MB            &#166;
+                &#166; over-allocated on /dev/cciss/c0d0.           &#166;
+                &#166; &quot; Switch to Interactive Mode?  
+
+Use of uninitialized value in formline at /sbin/parted2fdisk line 369.
+Use of uninitialized value in formline at /sbin/parted2fdisk line 359.
+Use of uninitialized value in formline at /sbin/parted2fdisk line 359.
+Mountlist analyzed. Result: &quot;2 MB over-allocated on /dev/cciss/c0d0.  &quot; Switch t
+
+In Attach the /var/log/mondorestore.log  file
+
+Thanks
+Giuseppe
+
+-----Messaggio originale-----
+Da: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64-bounces at lists.berlios.de</A>] Per conto di Grassi Giuseppe
+Inviato: gioved&#236; 8 gennaio 2009 17.54
+A: Bruno Cornec
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+Oggetto: [Mondorescue-ia64] R: Recovery from tape KO(OBDR)
+
+Hi,
+the log file &quot;mondorestore.log: is attached.
+The output of cat /proc/cmdline is:
+
+BOOT_IMAGE=scsi1:/vmlinuz root=/dev/ram0  rw ramdisk_size=94208  devfs=nomount noresume selinux=0 barrier=off ramdisk_blocksize=1024
+
+The output of ps command is:
+  PID  Uid        VSZ Stat Command
+    1 0          3952 S   /bin/sh /sbin/init noresume
+    2 0               SW  [migration/0]
+    3 0               SWN [ksoftirqd/0]
+    4 0               SW  [migration/1]
+    5 0               SWN [ksoftirqd/1]
+    6 0               SW&lt; [events/0]
+    7 0               SW&lt; [events/1]
+    8 0               SW&lt; [khelper]
+    9 0               SW&lt; [kacpid]
+   33 0               SW&lt; [kblockd/0]
+   34 0               SW&lt; [kblockd/1]
+   35 0               SW  [khubd]
+   52 0               SW  [pdflush]
+   53 0               SW  [pdflush]
+   54 0               SW  [kswapd0]
+   55 0               SW&lt; [aio/0]
+   56 0               SW&lt; [aio/1]
+  199 0               SW  [kseriod]
+  512 0          3184 S   /sbin/udevd --daemon
+ 1070 0          4016 S   /bin/sh
+ 1072 0          4016 S   /bin/sh
+ 1074 0          4016 S   /bin/sh
+ 1076 0          4016 S   /bin/sh
+ 1078 0          4016 S   /bin/sh
+ 1080 0          3952 S   /bin/sh /sbin/wait-for-petris
+ 1082 0          3952 S   /usr/bin/tail -f /var/log/mondorestore.log
+ 1456 0               SW&lt; [ata/0]
+ 1457 0               SW&lt; [ata/1]
+ 1458 0               SW&lt; [ata_aux]
+ 1636 0               SW  [scsi_eh_0]
+ 1641 0               SW  [scsi_eh_1]
+ 1646 0               SW  [scsi_eh_2]
+ 1985 0               SW  [scsi_eh_3]
+ 1986 0               SW  [usb-storage]
+ 3317 0          3968 S   klogd -c 2
+ 3320 0          3952 S   syslogd
+ 3533 0          3952 S   /bin/sh /sbin/post-init
+ 3566 0         13840 S   mondorestore -Z interactive -o -d /dev/nst0
+ 3836 0          3808 S   sleep 2
+ 3837 0          4016 R   ps
+
+Giuseppe
+
+-----Messaggio originale-----
+Da: Bruno Cornec [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">Bruno.Cornec at hp.com</A>]
+Inviato: mercoled&#236; 7 gennaio 2009 15.00
+A: Grassi Giuseppe
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+Oggetto: Re: Recovery from tape KO(OBDR)
+
+Hello,
+
+Grassi Giuseppe said on Mon, Dec 22, 2008 at 04:53:59PM +0100:
+
+&gt;<i> after having applied the changes (/usr/sbin/mindi):
+</I>&gt;<i> line 1689
+</I>&gt;<i> #   [ &quot;$CDRECOVERY&quot; = &quot;yes&quot; ] &amp;&amp; [ &quot;$TAPEDEV&quot; != &quot;&quot; ] &amp;&amp; Die &quot;Sorry, you
+</I>&gt;<i> can't use --cd-recovery and --write-tapes at the same time&quot;
+</I>&gt;<i> 
+</I>&gt;<i> The command:  mondoarchive -Oto -H -l ELILO -d /dev/st0  is accepted 
+</I>&gt;<i> and
+</I>
+Ok. So I committed it upstream as well.
+
+&gt;<i> works but the restore is run in interactive mode yet: mondorestore -Z 
+</I>&gt;<i> interactive -o -d /dev/nst0
+</I>
+Hummm. So there is still something wrong in the way mondorestore is called.
+Could you give me your /var/log/mondorestore.log file at that point, or if you can't at least the result of cat /proc/cmdline (all that at restore tim of course)
+
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Evangelist \        HP C&amp;I EMEA IET
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+
+Internet Email Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+-----------------------------------------------------------------------------------------------------
+
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: Mondorestore_12012009.txt
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090112/00f9f436/attachment.txt">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090112/00f9f436/attachment.txt</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000036.html">[Mondorescue-ia64] R: Recovery from tape KO(OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000041.html">[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#38">[ date ]</a>
+              <a href="thread.html#38">[ thread ]</a>
+              <a href="subject.html#38">[ subject ]</a>
+              <a href="author.html#38">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

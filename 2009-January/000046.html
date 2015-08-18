@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R:  R:  R: Recovery from tape KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B01968DCE%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000045.html">
+   <LINK REL="Next"  HREF="000047.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R:  R:  R: Recovery from tape KO(OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B01968DCE%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] R: R:  R:  R: Recovery from tape KO(OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Wed Jan 21 16:26:54 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000045.html">[Mondorescue-ia64] R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000047.html">[Mondorescue-ia64] R: R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#46">[ date ]</a>
+              <a href="thread.html#46">[ thread ]</a>
+              <a href="subject.html#46">[ subject ]</a>
+              <a href="author.html#46">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> -----Messaggio originale-----
+</I>&gt;<i> Da: Bruno Cornec [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">Bruno.Cornec at hp.com</A>] 
+</I>&gt;<i> Inviato: mercoled&#236; 21 gennaio 2009 14.48
+</I>&gt;<i> A: Grassi Giuseppe
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+</I>&gt;<i> Oggetto: Re: R: [Mondorescue-ia64] R: R: Recovery from tape KO(OBDR)
+</I>&gt;<i> 
+</I>&gt;<i> Grassi Giuseppe said on Fri, Jan 16, 2009 at 09:00:42PM +0100:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; In the mondoarchive log file (see following) the lvm size 
+</I>&gt;<i> detected is 
+</I>&gt;<i> &gt; 0 MB (/dev/cciss/c0d0p2  lvm  lvm  0) but I think is it not 
+</I>&gt;<i> correct. The &quot;df -m&quot; output is:
+</I>&gt;<i> 
+</I>&gt;<i> &gt;         DEVICE          MOUNTPOINT      FORMAT          
+</I>&gt;<i> SIZE (MB)       LABEL/UUID
+</I>&gt;<i> &gt; Use of uninitialized value in pattern match (m//) at 
+</I>&gt;<i> /usr/sbin/parted2fdisk line 514, &lt;PARTED&gt; line 1.
+</I>&gt;<i> &gt; Examining /dev/cciss/c0d0p2 (mount=lvm fmt=lvm psz=-1)
+</I>&gt;<i> 
+</I>&gt;<i> Could you give me the result of the command on your system:
+</I>&gt;<i> 
+</I>&gt;<i> parted -s /dev/cciss/c0d0 print 
+</I>&gt;<i> 
+</I>&gt;<i> Output format for parted is not constant depending on the 
+</I>&gt;<i> version :-( Currently I deal with # SLES 10 parted &gt;= 1.6.25 
+</I>&gt;<i> # RHEL 3 parted 1.6.3 # RHEL 4 parted 1.6.19
+</I>
+# parted -s /dev/cciss/c0d0 print  (on Itanium RedHat ES 4.7 (2.6.9-78.EL))
+Disk geometry for /dev/cciss/c0d0: 0.000-139979.062 megabytes
+Disk label type: gpt
+Minor    Start       End     Filesystem  Name                  Flags
+1          0.017   1000.002  fat32                             boot
+2       1000.002 139979.046                                    lvm
+
+Giuseppe
+&gt;<i> 
+</I>&gt;<i> Maybe on RHEL 5 it has changed again.
+</I>&gt;<i> Bruno.
+</I>&gt;<i> -- 
+</I>&gt;<i> Linux Profession Lead EMEA  / Open Source Evangelist \        
+</I>&gt;<i> HP C&amp;I EMEA IET
+</I>&gt;<i> <A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  
+</I>&gt;<i> <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+</I>&gt;<i> Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      
+</I>&gt;<i> <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+</I>&gt;<i> La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> 
+</I>&gt;<i> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+</I>&gt;<i> 
+</I>Internet E. Mail Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000045.html">[Mondorescue-ia64] R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000047.html">[Mondorescue-ia64] R: R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#46">[ date ]</a>
+              <a href="thread.html#46">[ thread ]</a>
+              <a href="subject.html#46">[ subject ]</a>
+              <a href="author.html#46">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

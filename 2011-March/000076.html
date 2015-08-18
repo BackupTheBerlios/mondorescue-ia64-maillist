@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Mondoarchive%20fails%0A%20withnewt-specific.c-%3Efatal_error&In-Reply-To=%3C20110328230150.GF367%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000075.html">
+   <LINK REL="Next"  HREF="000077.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Mondoarchive%20fails%0A%20withnewt-specific.c-%3Efatal_error&In-Reply-To=%3C20110328230150.GF367%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Tue Mar 29 01:01:50 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000075.html">[Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error
+</A></li>
+        <LI>Next message: <A HREF="000077.html">[Mondorescue-ia64] Mondoarchive fails	withnewt-specific.c-&gt;fatal_error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#76">[ date ]</a>
+              <a href="thread.html#76">[ thread ]</a>
+              <a href="subject.html#76">[ subject ]</a>
+              <a href="author.html#76">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Lester, Dean C (ASM Orlando) said on Mon, Mar 28, 2011 at 07:01:14PM +0000:
+
+&gt;<i> newt is used as the user-interface with mindi on the restore, and has a problem on ia64 with keyboard input. I have tried it with serial console, USB keyboard, as well as remote console over the MP.
+</I>
+I'm sorry of not having been able to fix this one.
+However, looking at the code again recently, and thinking of that topic,
+I think I have now an idea where the problem could be.
+
+I think this is linked to the tty given by the iLO/MP card on ia64.
+In the init script of mindi, what is done is:
+
+	# By default first serial line is configured as tty
+	# Required to have a correct serial console support (MP on ia64 or
+	# VSP with iLO2 e.g.)
+	for i in `cat /proc/cmdline` ; do
+        echo $i | grep -qi serial= &amp;&amp; serial=`echo $i | cut -d= -f2`
+	done
+	# Doing that is only valid when using a real serial line
+	if [ -f $serial ]; then
+		LogIt &quot;Redirecting serial $serial to /dev/tty&quot; 1
+		ln -s -f $serial /dev/tty
+	fi
+
+So the idea to debug the problem would be to determine which tty is
+associayed to the console when using busybox at restore time, and pass
+the serial=/dev/ttyS0 or whatever is pertinent to the boot prompt in
+order to see whether that is fixing the problem, which I think it
+should.
+
+Also note that I recently published a revised version of busybox that
+may also change the behaviour at restore time.
+
+&gt;<i> As to your issue of bzip, I don&#8217;t see an issue with copying the binary into /bin. Better yet, link to it there.
+</I>
+Or use the files in /etc/mindi/deplist.d to add your path and have it
+done correctly by mindi.
+
+In my version this is already done:
+./mindi/deplist.d/base.conf:/usr/bin/bzip2
+./mindi/deplist.d/base.conf:/bin/bzip2
+(Rev 2752 of SVN)
+
+Bruno.
+-- 
+Open Source &amp; Linux Profession Lead EMEA           / <A HREF="http://opensource.hp.com">http://opensource.hp.com</A>
+HP/Intel/Red Hat Open Source Solutions Initiative  / <A HREF="http://www.hpintelco.net">http://www.hpintelco.net</A>
+<A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>  <A HREF="http://mondorescue.org">http://mondorescue.org</A> <A HREF="http://project-builder.org">http://project-builder.org</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000075.html">[Mondorescue-ia64] Mondoarchive fails withnewt-specific.c-&gt;fatal_error
+</A></li>
+	<LI>Next message: <A HREF="000077.html">[Mondorescue-ia64] Mondoarchive fails	withnewt-specific.c-&gt;fatal_error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#76">[ date ]</a>
+              <a href="thread.html#76">[ thread ]</a>
+              <a href="subject.html#76">[ subject ]</a>
+              <a href="author.html#76">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

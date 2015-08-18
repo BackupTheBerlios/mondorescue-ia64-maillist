@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO	(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%20from%20tape%20KO%09%28OBDR%29&In-Reply-To=%3C20081219233721.GD17333%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000030.html">
+   <LINK REL="Next"  HREF="000033.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO	(OBDR)</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%20from%20tape%20KO%09%28OBDR%29&In-Reply-To=%3C20081219233721.GD17333%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO	(OBDR)">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Sat Dec 20 00:37:21 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000030.html">[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO (OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000033.html">[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#32">[ date ]</a>
+              <a href="thread.html#32">[ thread ]</a>
+              <a href="subject.html#32">[ subject ]</a>
+              <a href="author.html#32">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Giuseppe,
+
+Grassi Giuseppe said on Mon, Dec 15, 2008 at 02:31:15PM +0100:
+
+&gt;<i> using -H option at the backup time, the backup operation is aborted
+</I>&gt;<i> whith error:
+</I>&gt;<i> 
+</I>&gt;<i> &quot;FATAL ERROR. Sorry, you can't use --cd-recovery and --write-tapes at
+</I>&gt;<i> the same time&quot;
+</I>
+Humm. Could you remove the mindi line causing that error:
+[ &quot;$CDRECOVERY&quot; = &quot;yes&quot; ] &amp;&amp; [ &quot;$TAPEDEV&quot; != &quot;&quot; ] &amp;&amp; Die &quot;Sorry, you
+can't use --cd-recovery and --write-tapes at the same time&quot;
+
+and relaunch again please ?
+I'm not sure it's still valid to have that check, or whether it should
+be changed for somehitng else (my estimation is that it should go).
+
+&gt;<i> The procedure to able to use the tape reader again, is mandatory on x86
+</I>&gt;<i> too, when the tape has been put in OBDR mode to boot server.
+</I>
+Strange. On my side (DL380/ML110) it was not mandatory. 
+Could be a BIOS issue (server or tape) or ....
+
+&gt;<i> After execution of tape reconfiguration (echo &quot;scsi remove-single-device 1 0 3 0&quot; &gt;/proc/scsi/sci, modprobe st, echo &quot;scsi add-single-device 1 0 3 0&quot; &gt;/proc/scsi/scsci
+</I>
+Interesting. Would you lke to document your findings on our Wiki please
+in the FAQ or create a page for IA64 support and add that to it.
+
+Thanks a lot for your continuous support,
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Evangelist \        HP C&amp;I EMEA IET
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000030.html">[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO (OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000033.html">[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#32">[ date ]</a>
+              <a href="thread.html#32">[ thread ]</a>
+              <a href="subject.html#32">[ subject ]</a>
+              <a href="author.html#32">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

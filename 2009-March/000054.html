@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape	KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%20from%20tape%09KO%28OBDR%29&In-Reply-To=%3C20090305182559.GR22411%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000052.html">
+   <LINK REL="Next"  HREF="000055.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape	KO(OBDR)</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%20from%20tape%09KO%28OBDR%29&In-Reply-To=%3C20090305182559.GR22411%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape	KO(OBDR)">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Thu Mar  5 19:25:59 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000052.html">[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape KO(OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000055.html">[Mondorescue-ia64] R: R: R: R: R: R: R: Recovery from tapeKO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Giuseppe,
+
+Grassi Giuseppe said on Tue, Mar 03, 2009 at 12:44:31PM +0100:
+&gt;<i> the test of parted2fdisk.pl patch is not OK. The file tested by mondorestore (for string &quot; (m &quot;) isn't /tmp/parted2fdisk.log but /tmp/fdisk.log. In the file attached, I have applied the modification for write in /tmp/fdisk.log.
+</I>
+Ah right ! Ok, I have taken in account that, but just used the fact that
+parted2fidsk is outputing to fdisk.log, so just print instead of print FDISK.
+
+That shoud work the same as your modification.
+
+&gt;<i> Other modifications was necessary to traslate correctly commands fdisk -&gt; parted. See comments in parted2fdisk.pl attached.
+</I>
+I tried to incorporate your ideas, keeping them as generic as possible.
+
+&gt;<i> An other modification is necessary in /sbin/post-init in order to
+</I>&gt;<i> - eliminate the error (touch: cannot touch `/boot/boot.b': No such file or directory) 
+</I>
+I don't understand where that one comes from. I have no boot.b string in
+the project's code at all. So creating /boot, just to remove that error
+messages doesn't appeal to me. I'd prefer to understand where does that
+come from. Normaly it was Fixed in revision 2085 (Cf:
+<A HREF="http://trac.mondorescue.org/changeset/2085">http://trac.mondorescue.org/changeset/2085</A>)
+
+&gt;<i> - to use the serial terminal vt100 or remote serial console on Itanium server for mondorestore interactive mode
+</I>&gt;<i> 
+</I>&gt;<i> post-init file after line 8:
+</I>&gt;<i> 
+</I>&gt;<i> mkdir /boot # (touch /boot/boot.b)
+</I>&gt;<i> # Determine on which arch we're running
+</I>&gt;<i> arch=`uname -m`
+</I>&gt;<i> if [ $arch == 'ia64' ]; then
+</I>&gt;<i> ln -s -f /dev/ttyS0 /dev/tty
+</I>&gt;<i> fi
+</I>&gt;<i> #
+</I>
+Ah nice catch ! I'll have to test also on my side to see if that solve
+the issue for me as well. I put that in init in fact after the launch of
+terminals.
+
+&gt;<i> the problem:
+</I>&gt;<i> 
+</I>&gt;<i> &quot;The boot partition, created fat32, after files restoring becomes fat16.
+</I>&gt;<i> I have not understood the why.&quot;
+</I>&gt;<i> 
+</I>&gt;<i> is due at script &quot;format-and-kludge-vfat&quot; not existent. So the
+</I>
+Oh, oh ! Bug here. Fixed in rev 2157
+<A HREF="http://trac.mondorescue.org/changeset/2157">http://trac.mondorescue.org/changeset/2157</A>
+
+The rest of the modifications are in the chageset 2158. Please feel free
+to review and comment. 
+<A HREF="http://trac.mondorescue.org/changeset/2158">http://trac.mondorescue.org/changeset/2158</A>
+
+I'll redeliver a beta of 2.2.9 for you under a
+src.rpm format so that you can test it if you have time.
+
+Thanks a lot for your report. THanks to your help, we will finally have
+a working ia64 working support.
+
+Best regards,
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Ambassador \   EMEA CME Sol. Center
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000052.html">[Mondorescue-ia64] R: R: R: R: R: R: Recovery from tape KO(OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000055.html">[Mondorescue-ia64] R: R: R: R: R: R: R: Recovery from tapeKO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

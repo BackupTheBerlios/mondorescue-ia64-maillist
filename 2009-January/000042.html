@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B01968826%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000039.html">
+   <LINK REL="Next"  HREF="000044.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B01968826%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Fri Jan 16 20:13:16 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000039.html">[Mondorescue-ia64] R: Recovery from tape KO(OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000044.html">[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#42">[ date ]</a>
+              <a href="thread.html#42">[ thread ]</a>
+              <a href="subject.html#42">[ subject ]</a>
+              <a href="author.html#42">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Da: Bruno Cornec [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">Bruno.Cornec at hp.com</A>] 
+</I>&gt;<i> Inviato: mercoled&#236; 14 gennaio 2009 13.17
+</I>&gt;<i> A: Grassi Giuseppe
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+</I>&gt;<i> Oggetto: Re: [Mondorescue-ia64] R: Recovery from tape KO(OBDR)
+</I>&gt;<i> 
+</I>&gt;<i> Grassi Giuseppe said on Thu, Jan 08, 2009 at 05:54:17PM +0100:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; The output of cat /proc/cmdline is:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; BOOT_IMAGE=scsi1:/vmlinuz root=/dev/ram0  rw ramdisk_size=94208  
+</I>&gt;<i> &gt; devfs=nomount noresume selinux=0 barrier=off ramdisk_blocksize=1024
+</I>&gt;<i> 
+</I>&gt;<i> Ok. So I already have a problem to solve here, as nuke 
+</I>&gt;<i> keyword is not mentioned nor RESTORE :-( (which should be 
+</I>&gt;<i> there when using -H) You used -H with mondoarchive don't you 
+</I>&gt;<i> ? I don't really see how you do not get the RESTORE parameter 
+</I>&gt;<i> if you used -H, so I'll also need your mondoarchive.log to 
+</I>&gt;<i> help solve that issue please.
+</I>
+Yes I have run mondoarchive with -H option (mondoarchive -Oto -H -l ELILO -d /dev/st0). Mondoarchive log is attached (Mondoarchive.log_120109.txt)
+
+
+&gt;<i> 
+</I>&gt;<i> I think that if you add it manually at boot time prompt, it 
+</I>&gt;<i> should trigger the call to nuke mode then.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 15:31 Please specify an alternate tape device,
+</I>&gt;<i> &gt; 15:31 or hit &lt;Enter&gt; to boot from another media.
+</I>&gt;<i> &gt; 15:31 User specified /dev/nst0 instead
+</I>&gt;<i> 
+</I>&gt;<i> You should give /dev/st0 as mondorestore adds the 'n' when 
+</I>&gt;<i> needed alone.
+</I>
+No, I have tried with /dev/st0  but doesn't function, mondorestore doesn't adds the 'n':
+output captured on vt100 console during recovery operation from tape:
+......
+Probing nls_iso8859-1...
+Probing nls_utf8...
+cciss0: No device changes detected.
+cciss0: No appropriate SCSI device detected, SCSI subsystem not engaged.
+Mounting /tmp/tmpfs...Great. Pivot succeeded w/ size=64m
+Pivoting /tmp...cp: cannot stat '/tmp/*': No such file or directory
+mv: cannot rename '/tmp.old/mondo-restore.log': No such file or directory
+cp: cannot stat '/tmp.old/mondo-restore.log': No such file or directory
+Done.
+ Initializing USB Mass Storage driver...
+scsi3 : SCSI emulation for USB Mass Storage devices
+  Vendor: TEAC      Model: DV-28E-V          Rev: E.AK
+  Type:   CD-ROM                             ANSI SCSI revision: 02
+sr1: scsi3-mmc drive: 24x/24x cd/rw xa/form2 cdda tray
+Attached scsi generic sg1 at scsi3, channel 0, id 0, lun 0,  type 5
+usbcore: registered new driver usb-storage
+USB Mass Storage support registered.
+mt: can't open '/dev/nst0': No such device or address
+mt: can't open '/dev/nst0': No such device or address
+dd: can't open '/dev/nst0': No such device or address
+tar: short read
+/dev/nst0 failed to act as extended data disk for booting.
+Please specify an alternate tape device,
+or hit &lt;Enter&gt; to boot from another media.
+---&gt; /dev/st0
+mt: can't open '/dev/st0': No such device or address
+mt: can't open '/dev/st0': No such device or address
+dd: can't open '/dev/st0': No such device or address
+tar: short read
+/dev/st0 failed to act as extended data disk for booting.
+Please specify an alternate tape device,
+or hit &lt;Enter&gt; to boot from another media.
+---&gt;   
+
+         From an other shell (ALT+F2) I have submitted: 
+         echo &quot;scsi remove-single-device 1 0 3 0&quot; &gt; /proc/scsi/scsi
+         reset tape (power cycle)
+         echo &quot;scsi add-single-device 1 0 3 0&quot; &gt; /proc/scsi/scsi
+
+
+
+Vendor: HP        Model: C7438A            Rev: ZP76
+  Type:   Sequential-Access                  ANSI SCSI revision: 03
+Attached scsi tape st0 at scsi1, channel 0, id 3, lun 0
+st0: try direct i/o: yes (alignment 512 B), max page reachable by HBA 67371008
+Attached scsi generic sg0 at scsi1, channel 0, id 3, lun 0,  type 1
+/dev/st0
+st0: Block limits 1 - 16777215 bytes.
+tar: invalid gzip magic
+/dev/st0 failed to act as extended data disk for booting.
+Please specify an alternate tape device,
+or hit &lt;Enter&gt; to boot from another media.
+---&gt; /dev/st0
+tar: invalid gzip magic
+/dev/st0 failed to act as extended data disk for booting.
+Please specify an alternate tape device,
+or hit &lt;Enter&gt; to boot from another media.
+---&gt; /dev/nst0
+sed: bad option in substitution expression
+Using tape as extended datadisk. Good.
+Installing additional tools ...
+Populating / with tar file content...
+Done.
+Probing st...
+Probing osst...
+Probing scsi_mod...
+
+
+How you can see, only /dev/nst0 is accepted.
+See Mondorestore Log attached (Mondorestore.log_160109.txt)
+
+
+&gt;<i> &gt; 15:32 init (from mindi v2.0.4-r2045)
+</I>&gt;<i> 
+</I>&gt;<i> Would be great if you could update to mondo-2.2.8 and mindi 
+</I>&gt;<i> 2.0.5 beta under <A HREF="ftp://ftp.mondorescue.org/test">ftp://ftp.mondorescue.org/test</A>
+</I>&gt;<i> 
+</I>&gt;<i> &gt; input: USB HID v1.00 Keyboard [0430:0005] on usb-0000:00:02.1-2
+</I>&gt;<i> 
+</I>&gt;<i> Keyboard is however well detected, which makes me wnder why 
+</I>&gt;<i> it doesn't work correctly afterwards :-(
+</I>&gt;<i> 
+</I>&gt;<i> &gt; scsi3 : SCSI emulation for USB Mass Storage devices
+</I>&gt;<i> &gt;   Vendor: TEAC      Model: DV-28E-V          Rev: E.AK
+</I>&gt;<i> &gt;   Type:   CD-ROM                             ANSI SCSI revision: 02
+</I>&gt;<i> &gt; sr1: scsi3-mmc drive: 24x/24x cd/rw xa/form2 cdda tray
+</I>&gt;<i> 
+</I>&gt;<i> Ok. OBDR well found.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Attached scsi generic sg0 at scsi1, channel 0, id 3, lun 0,  type 5
+</I>&gt;<i> &gt;   Vendor: HP        Model: C7438A            Rev: ZP76
+</I>&gt;<i> &gt;   Type:   Sequential-Access                  ANSI SCSI revision: 03
+</I>&gt;<i> &gt; Attached scsi tape st0 at scsi1, channel 0, id 3, lun 0
+</I>&gt;<i> 
+</I>&gt;<i> And tape too.
+</I>&gt;<i> 
+</I>&gt;<i> Bruno.
+</I>&gt;<i> -- 
+</I>&gt;<i> Linux Profession Lead EMEA  / Open Source Evangelist \        
+</I>&gt;<i> HP C&amp;I EMEA IET
+</I>&gt;<i> <A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  
+</I>&gt;<i> <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+</I>&gt;<i> Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      
+</I>&gt;<i> <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+</I>&gt;<i> La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> 
+</I>&gt;<i> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+</I>&gt;<i> 
+</I>
+
+Internet Email Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+-----------------------------------------------------------------------------------------------------
+
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: Mondoarchive.log_1201009.txt
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090116/808d88e3/attachment.txt">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090116/808d88e3/attachment.txt</A>&gt;
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: Mondorestore.log_160109.txt
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090116/808d88e3/attachment-0001.txt">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090116/808d88e3/attachment-0001.txt</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000039.html">[Mondorescue-ia64] R: Recovery from tape KO(OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000044.html">[Mondorescue-ia64] R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#42">[ date ]</a>
+              <a href="thread.html#42">[ thread ]</a>
+              <a href="subject.html#42">[ subject ]</a>
+              <a href="author.html#42">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

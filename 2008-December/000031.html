@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R:  Recovery  from  tape KO (OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20%20Recovery%20%20from%20%20tape%20KO%20%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B0186102C%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000028.html">
+   <LINK REL="Next"  HREF="000034.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R:  Recovery  from  tape KO (OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20%20Recovery%20%20from%20%20tape%20KO%20%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B0186102C%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] R: R:  Recovery  from  tape KO (OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Thu Dec 18 15:28:30 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000028.html">[Mondorescue-ia64] R:  R: R:  Recovery  from  tape KO (OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000034.html">[Mondorescue-ia64] R: R:  Recovery  from  tape KO (OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+following, the output of &quot;vgdisplay -c&quot; command in linux RedHat 5 environment:
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">root at itmit2sl23</A> ~]# vgdisplay -c
+  VolGroup00:r/w:772:-1:0:5:5:-1:0:1:1:142311424:32768:4343:1155:3188:DyOEaR-enI7-oxmj-LGYJ-MJy2-sM0J-f8TMQJ
+[<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">root at itmit2sl23</A> ~]#
+
+In case of output redirection: &quot;vgdisplay -c &gt; /tmp/vg.lst&quot; 
+the file /tmp/vg.lst is empty  ( 0 byte)
+
+The output of &quot;vgdisplay&quot; command is:
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">root at itmit2sl23</A> ~]# vgdisplay
+  --- Volume group ---
+  VG Name               VolGroup00
+  System ID
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  6
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                5
+  Open LV               5
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               135.72 GB
+  PE Size               32.00 MB
+  Total PE              4343
+  Alloc PE / Size       1155 / 36.09 GB
+  Free  PE / Size       3188 / 99.62 GB
+  VG UUID               DyOEaR-enI7-oxmj-LGYJ-MJy2-sM0J-f8TMQJ
+
+Giuseppe
+-----Messaggio originale-----
+Da: Bruno Cornec [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">Bruno.Cornec at hp.com</A>] 
+Inviato: venerd&#236; 12 dicembre 2008 0.16
+A: Grassi Giuseppe
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+Oggetto: Re: R: [Mondorescue-ia64] Recovery from tape KO (OBDR)
+
+Grassi Giuseppe said on Tue, Dec 09, 2008 at 01:55:46PM +0100:
+
+&gt;<i> depends on linux red hat version 5. 
+</I>&gt;<i> In such version, the vgdisplay output redirection doesn't function so I have modify the script /usr/lib/mindi/analyze-my-lvm at line 84,in this way:
+</I>&gt;<i> 
+</I>&gt;<i> $LVMCMD vgdisplay $current_VG &gt; $VG_info_file  (old row) $LVMCMD 
+</I>&gt;<i> vgdisplay $current_VG tee $VG_info_file (new row)
+</I>
+Without a '|' before the tee ?
+Do you use SELinux ?
+Could you try to see what gives vgdisplay -c on your system please ?
+
+&gt;<i> For the other problem: &quot;.. the magnetc tape (with backup) is automatically expelled&quot;
+</I>&gt;<i> I'm analyzing the script: /usr/sbin/mindi and I have found an error for &quot;IA64&quot;.
+</I>&gt;<i> 
+</I>&gt;<i> At the line 1321, command mkisofs ......  -b images/mindi-bootroot.$BOOT_SIZE.img ......, the file images/mindi-bootroot.$BOOT_SIZE.img, does,t exist because it has been deleted before.
+</I>&gt;<i> 
+</I>&gt;<i> I suppose it has been deleted in the &quot;PrepareDataDiskImages&quot; routine at line 2823, at the test TAPEDEV = true:
+</I>&gt;<i> elif [ &quot;$TAPEDEV&quot; ] ; then
+</I>&gt;<i>       rm -f $MINDI_CACHE/{*img,*iso}
+</I>
+Yep. You're right.
+
+I've made the following path to try fixing your issue. I'd appreciate a report on your side if it's the right one.
+Cf: <A HREF="http://trac.mondorescue.org/changeset/2078">http://trac.mondorescue.org/changeset/2078</A>
+
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Evangelist \        HP C&amp;I EMEA IET
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+
+Internet Email Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+-----------------------------------------------------------------------------------------------------
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000028.html">[Mondorescue-ia64] R:  R: R:  Recovery  from  tape KO (OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000034.html">[Mondorescue-ia64] R: R:  Recovery  from  tape KO (OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] Installing Mondo on Integrity 4640	servers	running RHEL 4.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2007-June/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Installing%20Mondo%20on%20Integrity%204640%0A%09servers%09running%20RHEL%204.&In-Reply-To=%3C20070605233826.GM9455%40morley.grenoble.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000005.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] Installing Mondo on Integrity 4640	servers	running RHEL 4.</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Installing%20Mondo%20on%20Integrity%204640%0A%09servers%09running%20RHEL%204.&In-Reply-To=%3C20070605233826.GM9455%40morley.grenoble.hp.com%3E"
+       TITLE="[Mondorescue-ia64] Installing Mondo on Integrity 4640	servers	running RHEL 4.">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Wed Jun  6 01:38:26 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000005.html">[Mondorescue-ia64] Installing Mondo on Integrity 4640 servers	running RHEL 4.
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE><A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">John.Hoover at jb.state.ia.us</A> said on Tue, Jun 05, 2007 at 09:32:53AM -0500:
+
+&gt;<i> [<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">root at HQQA1</A> ia64mondo]# rpm -ivh buffer-1.19-1.ia64.rpm
+</I>&gt;<i> error: Failed dependencies:
+</I>&gt;<i>         libc.so.6(GLIBC_2.0) is needed by buffer-1.19-1.ia64
+</I>&gt;<i>         libc.so.6(GLIBC_2.1.3) is needed by buffer-1.19-1.ia64
+</I>&gt;<i>         libc.so.6(GLIBC_2.2) is needed by buffer-1.19-1.ia64
+</I>
+I guess you use RHEL4 or 5 ?
+that package was produced for RHEL3.
+
+Please use 
+wget <A HREF="ftp://ftp.mondorescue.org/rhel/4/buffer-1.19-1.src.rpm">ftp://ftp.mondorescue.org/rhel/4/buffer-1.19-1.src.rpm</A>
+rpmbuild --rebuild buffer-1.19-1.src.rpm
+
+&gt;<i> I did reinstall perl with static libraries, so I have a static libperl.a 
+</I>&gt;<i> available as well.
+</I>
+Good. That will be usefull.
+
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Evangelist \        HP C&amp;I EMEA IET
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000005.html">[Mondorescue-ia64] Installing Mondo on Integrity 4640 servers	running RHEL 4.
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

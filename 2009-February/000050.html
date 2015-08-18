@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B01A414A2%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000049.html">
+   <LINK REL="Next"  HREF="000051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B01A414A2%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Tue Feb 17 20:48:32 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000049.html">[Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000051.html">[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I have found a wrong check in mondorestore (mondo-prep.c-&gt;partition-device#1844
+The test for parted2fdisk is not correct.  ?
+
+1838 	if (pout_to_fdisk) {
+ 1839 		log_msg(1, &quot;Doing the new all-in-one fdisk thing&quot;);
+ 1840 		log_msg(1, &quot;output = '%s'&quot;, output);
+ 1841 		fput_string_one_char_at_a_time(pout_to_fdisk, output);
+ 1842 		fput_string_one_char_at_a_time(pout_to_fdisk, &quot;\n\np\n&quot;);
+ 1843 		strcpy(tmp, last_line_of_file(FDISK_LOG));
+ 1844 		if (strstr(tmp, &quot; (m &quot;)) {
+ 1845 			log_msg(1, &quot;Successfully created partition %d on %s&quot;, partno, drive);
+ 1846 		} else {
+ 1847 			log_msg(1, &quot;last line = %s&quot;, tmp);
+ 1848 			log_msg(1, &quot;Failed to create partition %d on %s; sending 'Enter'...&quot;, partno, drive);
+ 1849 		}
+ 1850 		if (!retval) {
+
+The &quot; (m &quot; substring is not present in last line of /tmp/fdisk.log file but this is normal because that string is present only when /sbin/fdisk command is used but on ia64 architecture the linux command used is /sbin/parted via parted2fdisk perl script.
+
+Example of /sbin/fdisk command:
+
+The number of cylinders for this disk is set to 17844.
+There is nothing wrong with that, but this is larger than 1024,
+and could in certain setups cause problems with:
+1) software that runs at boot time (e.g., old versions of LILO)
+2) booting and partitioning software from other OSs
+   (e.g., DOS FDISK, OS/2 FDISK)
+
+Command (m for help):
+
+The last line contains &quot; (m &quot; string
+
+Example of /sbin/parted command:
+GNU Parted 1.6.19
+Copyright (C) 1998 - 2004 Free Software Foundation, Inc.
+This program is free software, covered by the GNU General Public License.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+Using /dev/cciss/c0d0
+(parted) 
+
+The last line doesn't contains &quot; (m &quot; string
+
+Is it possible to change the check (mondorestore line xxxx) so that is also all right for ia64 architecture ?
+
+Thanks
+Giuseppe
+PS. mondorestore log is attached
+
+
+&gt;<i> Da: Grassi Giuseppe 
+</I>&gt;<i> Inviato: marted&#236; 3 febbraio 2009 20.21
+</I>&gt;<i> A: 'Bruno Cornec'
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+</I>&gt;<i> Oggetto: R: R: R: [Mondorescue-ia64] R: R: Recovery from tape KO(OBDR)
+</I>&gt;<i> 
+</I>&gt;<i> Hi,
+</I>&gt;<i> I am continuing the tests...I have discovered that there is a 
+</I>&gt;<i> problem in the calculation of the dimension of the 
+</I>&gt;<i> partitions. The problem is present on Itanium environment but 
+</I>&gt;<i> is not present on x86 environment. 
+</I>&gt;<i> 
+</I>&gt;<i> On Itanium environment the script /usr/sbin/mindi, runs 
+</I>&gt;<i> &quot;parted2fdisk&quot; perl script to get the partition size 
+</I>&gt;<i> informations but there aren't information returned. 
+</I>&gt;<i> 
+</I>&gt;<i> In /usr/sbin/mindi, at the line 1984 the parted2fdisk is run:
+</I>&gt;<i> /usr/sbin/parted2fdisk -s /dev/cciss/c0d0
+</I>&gt;<i> 
+</I>&gt;<i> Executing the same command in a shell, no information is returned:
+</I>&gt;<i> # /usr/sbin/parted2fdisk -s /dev/cciss/c0d0 #
+</I>&gt;<i> 
+</I>&gt;<i> On x86 environment, instead function, the disk size is returned: 
+</I>&gt;<i> # /usr/sbin/parted2fdisk -s /dev/cciss/c0d0 71126640
+</I>&gt;<i> 
+</I>&gt;<i> I have discovered that the script &quot;parted2fdisk.pl&quot;, is not 
+</I>&gt;<i> used in x86 environment. parted2fdisk is a link to 
+</I>&gt;<i> /sbin/fdisk command:
+</I>&gt;<i> &quot;lrwxrwxrwx  1 root root    11 11 lug  2008 
+</I>&gt;<i> /usr/sbin/parted2fdisk -&gt; /sbin/fdisk&quot;
+</I>&gt;<i> so, when /usr/sbin/mindi script runs: 
+</I>&gt;<i> /usr/sbin/parted2fdisk -s /dev/cciss/c0d0
+</I>&gt;<i> 
+</I>&gt;<i> really runs &quot;/sbin/fdisk -s /dev/cciss/c0d0&quot;
+</I>&gt;<i> 
+</I>&gt;<i> I have tried to run the same command on Itanium environment 
+</I>&gt;<i> and ....great.. it is correct: 
+</I>&gt;<i> # /sbin/fdisk -s /dev/cciss/c0d0
+</I>&gt;<i> 
+</I>&gt;<i> WARNING: GPT (GUID Partition Table) detected on 
+</I>&gt;<i> '/dev/cciss/c0d0'! The util fdisk doesn't support GPT. Use GNU Parted.
+</I>&gt;<i> 
+</I>&gt;<i> 143338560
+</I>&gt;<i> 
+</I>&gt;<i> So I have modified the script /usr/sbin/mindi at line 1984:
+</I>&gt;<i> res=`$FDISK -s $device 2&gt;&gt; $LOGFILE`		(old line)
+</I>&gt;<i> res=`/sbin/fdisk -s $device 2&gt;&gt; $LOGFILE`		(new line)
+</I>&gt;<i> and now the restore operation is able to partitioning the disk.
+</I>&gt;<i> 
+</I>&gt;<i> There is other little errors: 
+</I>&gt;<i> 
+</I>&gt;<i> /usr/lib/mindi/analyze-my-lvm  at the line 236:
+</I>&gt;<i> lvmversion=`lvmdiskscan --help 2&gt;&amp;1 |     (--help option is 
+</I>&gt;<i> not correct)
+</I>&gt;<i> lvmversion=`lvmdiskscan --version 2&gt;&amp;1 |   (correct line)
+</I>&gt;<i> 
+</I>&gt;<i> /usr/sbin/mindi at the line 726:
+</I>&gt;<i> vdf -P | grep -E '/vmfs/volumes' | awk '{print $1}'   (wrong 
+</I>&gt;<i> command vdf)
+</I>&gt;<i> df -P | grep -E '/vmfs/volumes' | awk '{print $1}'    (correct line)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> It is possble to eliminate the warning strings printed by 
+</I>&gt;<i> /parted2fdisk:
+</I>&gt;<i> Use of uninitialized value in formline at /sbin/parted2fdisk line 369.
+</I>&gt;<i> Use of uninitialized value in formline at /sbin/parted2fdisk line 359.
+</I>&gt;<i> Use of uninitialized value in formline at /sbin/parted2fdisk line 359.
+</I>&gt;<i> removing &quot;-w&quot; option in the first line of the script:
+</I>&gt;<i>  
+</I>&gt;<i> #!/usr/bin/perl -w
+</I>&gt;<i> Giuseppe
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Da: Bruno Cornec [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">Bruno.Cornec at hp.com</A>]
+</I>&gt;<i> &gt; Inviato: gioved&#236; 22 gennaio 2009 9.12
+</I>&gt;<i> &gt; A: Grassi Giuseppe
+</I>&gt;<i> &gt; Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+</I>&gt;<i> &gt; Oggetto: Re: R: R: [Mondorescue-ia64] R: R: Recovery from tape 
+</I>&gt;<i> &gt; KO(OBDR)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Grassi Giuseppe said on Wed, Jan 21, 2009 at 04:26:54PM +0100:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; Use of uninitialized value in pattern match (m//) at
+</I>&gt;<i> &gt; &gt; &gt; /usr/sbin/parted2fdisk line 514, &lt;PARTED&gt; line 1.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Sorry, I still do not understand :-(
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; # parted -s /dev/cciss/c0d0 print  (on Itanium RedHat ES
+</I>&gt;<i> &gt; 4.7 (2.6.9-78.EL))
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I already took in account RHEL4 sorry for that (thought we were 
+</I>&gt;<i> &gt; speaking of rhel5). But I never tried myself with LVM so 
+</I>&gt;<i> that may be 
+</I>&gt;<i> &gt; the reason why I've not handled that correctly.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I tried to give your parted result to my script and had no 
+</I>&gt;<i> warning on 
+</I>&gt;<i> &gt; my side :-(
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; And in the log you provided, there is mention of a RESTORE label 
+</I>&gt;<i> &gt; created.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; So I think I really need to try duplicating your 
+</I>&gt;<i> environment in order 
+</I>&gt;<i> &gt; to understand what happens, as nothing in your logs is 
+</I>&gt;<i> driving me to 
+</I>&gt;<i> &gt; the point which is creating a problem.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Bruno.
+</I>&gt;<i> &gt; -- 
+</I>&gt;<i> &gt; Linux Profession Lead EMEA  / Open Source Evangelist \        
+</I>&gt;<i> &gt; HP C&amp;I EMEA IET
+</I>&gt;<i> &gt; <A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \ 
+</I>&gt;<i> &gt; <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+</I>&gt;<i> &gt; Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      
+</I>&gt;<i> &gt; <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+</I>&gt;<i> &gt; La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> 
+</I>&gt;<i> &gt; <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>
+
+Internet Email Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+-----------------------------------------------------------------------------------------------------
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: mondorestore.log
+Type: application/octet-stream
+Size: 175705 bytes
+Desc: mondorestore.log
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090217/4c642be0/attachment.obj">https://lists.berlios.de/pipermail/mondorescue-ia64/attachments/20090217/4c642be0/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000049.html">[Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000051.html">[Mondorescue-ia64] R: R: R: R: R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

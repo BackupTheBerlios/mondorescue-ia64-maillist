@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R: R: R: R: R: R: R:	R:	RecoveryfromtapeKO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%0A%09R%3A%09RecoveryfromtapeKO%28OBDR%29&In-Reply-To=%3C20090430155038.GV12760%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R: R: R: R: R: R: R:	R:	RecoveryfromtapeKO(OBDR)</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%0A%09R%3A%09RecoveryfromtapeKO%28OBDR%29&In-Reply-To=%3C20090430155038.GV12760%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] R: R: R: R: R: R: R: R:	R:	RecoveryfromtapeKO(OBDR)">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Thu Apr 30 17:50:38 CEST 2009</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#62">[ date ]</a>
+              <a href="thread.html#62">[ thread ]</a>
+              <a href="subject.html#62">[ subject ]</a>
+              <a href="author.html#62">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Giuseppe,
+
+Sorry to come back so late back to you. Was overloaded these last weeks.
+
+Grassi Giuseppe said on Thu, Mar 19, 2009 at 05:36:32PM +0100:
+
+&gt;<i> # locate strict.pm
+</I>&gt;<i> /usr/lib/perl5/5.8.5/strict.pm
+</I>&gt;<i> 
+</I>&gt;<i> but during recovery phase, before that &quot;post-init&quot; run the mondorestore, the strict.pm is not present:
+</I>&gt;<i> # find / -name strict.pm
+</I>&gt;<i> # find / -name perl*
+</I>&gt;<i> /usr/bin/perl
+</I>&gt;<i> #
+</I>
+Yeah ! Of course. I'm so stupid :-(
+So indeed, all perl scripts part of the mindi env do miss their perl
+modules :-(. So I modified mindi in order to support that.
+It's in rev [2183].
+
+&gt;<i> &gt; &gt; OK with mondo-2.2.9-1 rhel4, format-and-kludge-vfat is present but 
+</I>&gt;<i> &gt; &gt; doesn't work correctly
+</I>&gt;<i> &gt; Ah. Progress is often done step by step ;-)
+</I>&gt;<i> &gt; &gt; I think sed command is not correct for cciss disks. Drive will be 
+</I>&gt;<i> &gt; &gt; /dev/cciss/c0d0  not/dev/cciss/cd0p1. sed command is 
+</I>&gt;<i> &gt; &gt; correct in case 
+</I>&gt;<i> &gt; &gt; of scsi direct attached disk: /dev/scsi/sda1 but is not correct for 
+</I>&gt;<i> &gt; &gt; smartarray controller disks
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; In fact, that has been fixed elsewhere, but of course not 
+</I>&gt;<i> &gt; there as that script wasn't really used it seem. Will look at 
+</I>&gt;<i> &gt; it and come back to you.
+</I>
+Now fixed in rev [2186] hopefully.
+
+&gt;<i> &gt; &gt; &gt; &gt; a
+</I>&gt;<i> &gt; &gt; &gt; &gt; 00
+</I>&gt;<i> &gt; &gt; &gt; &gt; part=00
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Ok, so mondorestore doesn't pass the correct value to 
+</I>&gt;<i> &gt; parted2fdisk. 
+</I>&gt;<i> &gt; &gt; &gt; It's clear from that log portion :-( I need to find why 
+</I>&gt;<i> &gt; if you can 
+</I>&gt;<i> &gt; &gt; &gt; call it with -K99 that may help.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; In attach the mondorestore.log run with -K99 option
+</I>
+Many thanks I now know why this is acting like that. 
+
+&gt;<i> In attach the log of &quot;make-me-bootable&quot; execution whit set -x and the mountlist.txt file
+</I>
+That script in fact seems largely useless. I'll need to remove it, and
+just handling the activation of the right partition in the caller
+instead. At least, that's how I plan to solve that issue.
+
+&gt;<i> Remember that I have modify /usr/sbin/mindi in order to have a correct file mountlist.txt. See my e-mail February 02 2009 (attached) otherwise the size of partition 2 in mountlist.txt is not correct.
+</I>
+Yep. Still need to work on that part as well.
+
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Ambassador \   EMEA CME Sol. Center
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#62">[ date ]</a>
+              <a href="thread.html#62">[ thread ]</a>
+              <a href="subject.html#62">[ subject ]</a>
+              <a href="author.html#62">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

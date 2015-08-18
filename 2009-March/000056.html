@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R: R: R: R: R: R: Recovery	from	tapeKO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%0A%09from%09tapeKO%28OBDR%29&In-Reply-To=%3C20090311134928.GI8118%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000055.html">
+   <LINK REL="Next"  HREF="000057.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R: R: R: R: R: R: Recovery	from	tapeKO(OBDR)</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20R%3A%20Recovery%0A%09from%09tapeKO%28OBDR%29&In-Reply-To=%3C20090311134928.GI8118%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] R: R: R: R: R: R: R: Recovery	from	tapeKO(OBDR)">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Wed Mar 11 14:49:28 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000055.html">[Mondorescue-ia64] R: R: R: R: R: R: R: Recovery from tapeKO(OBDR)
+</A></li>
+        <LI>Next message: <A HREF="000057.html">[Mondorescue-ia64] R: R: R: R: R: R: R: R: Recovery fromtapeKO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#56">[ date ]</a>
+              <a href="thread.html#56">[ thread ]</a>
+              <a href="subject.html#56">[ subject ]</a>
+              <a href="author.html#56">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Giuseppe,
+
+First let me thank you for your continuous support on those issues. I
+really appreciate it ;-)
+
+Grassi Giuseppe said on Wed, Mar 11, 2009 at 10:40:21AM +0100:
+&gt;<i> unfortunately the changes are not OK.
+</I>
+Ok, so let's see:
+
+&gt;<i> Compilation error due to  &quot;use strict;&quot;  instruction, so I have deleted.
+</I>
+You shouldn't ;-) I don't want to publish a perl script which doesn't
+work with use strict. We really need to solve what is wrong with it, but
+keep the use strict. That's a very important perl feature I want to use.
+
+Could you send me the errors reported with use strict so that I could
+fix them ?
+On my side I have that:
+$ perl -c mindi/parted2fdisk.pl
+mindi/parted2fdisk.pl syntax OK
+
+So can't really see what is causing the issue (maybe realated to your
+execution context).
+
+&gt;<i> The &quot;print&quot; write in the fdisk.log file after mondorestore has read. Flush STDOUT mechanism is necessary, so I have insert &quot;$| = 1;&quot; to flush.
+</I>
+Ok. I added it as well as I understand the need.
+
+&gt;<i> The &quot;print &quot;command (m for help) ...&quot; is necessary after:
+</I>&gt;<i> if ($i =~ /^p$/) {
+</I>&gt;<i>                                         fdisk_list($device,undef,\%start,\%end,
+</I>&gt;<i> 
+</I>&gt;<i> because the mondorestore process, checks the &quot;command (m for help)..&quot; string, after &quot;p&quot;. For example:
+</I>
+Agreed. I added it as well.
+
+&gt;<i> The &quot;print &quot;command (m for help) ...&quot; is necessary after:
+</I>&gt;<i>  else {
+</I>&gt;<i>                                         print FLOG &quot;Unknown command: $i\n&quot;;
+</I>&gt;<i>                                         next;
+</I>&gt;<i> because, in some cases, the mondorestore process, checks the &quot;command (m for help)..&quot; string, after \n charecters.
+</I>
+Right. Added as well.
+
+&gt;<i> There is an other problem on the last command send to parted2fdisk:
+</I>&gt;<i> &quot;a 00&quot;  to &quot;toggle a bootable flag&quot; the partition 00 doesn't exist. 
+</I>&gt;<i> Is a mondorestore.c problem ?
+</I>
+I think so :-( I don't really know how this is triggered. Could you
+provide the log file with full debug mode (-K 99) in order for me to see
+what is happening there ? Thanks in advance.
+
+&gt;<i> I force $part=1 in case of &quot;a&quot; command, because the... 00 is not 00 but ....
+</I>
+I think we need to solve that for good.
+I did that in between: $part = 1 if ($part le 0); which doesn't seem
+to work for you :-(
+
+&gt;<i> During parted2fdisk execution the following error appears:
+</I>&gt;<i>                              Use of uninitialized value in pattern match (m//) at /sbin/parted2fdisk line 537, &lt;PARTED&gt; line 1.
+</I>&gt;<i>            Use of uninitialized value in pattern match (m//) at /sbin/parted2fdisk line 537, &lt;PARTED&gt; line 1.
+</I>&gt;<i> 
+</I>&gt;<i> it is possible to eliminate the error removing - w in first line
+</I>
+Yes, but again, this is just masking the problem, but not solving it ;-)
+And in fact as it shouldn't happen it reveals an error somewhere in the
+script.
+
+&gt;<i> &gt; &gt; An other modification is necessary in /sbin/post-init in order to
+</I>&gt;<i> &gt; &gt; - eliminate the error (touch: cannot touch `/boot/boot.b': No such 
+</I>&gt;<i> &gt; &gt; file or directory)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I don't understand where that one comes from. I have no 
+</I>&gt;<i> &gt; boot.b string in the project's code at all. So creating 
+</I>&gt;<i> &gt; /boot, just to remove that error messages doesn't appeal to 
+</I>&gt;<i> &gt; me. I'd prefer to understand where does that come from. 
+</I>&gt;<i> &gt; Normaly it was Fixed in revision 2085 (Cf:
+</I>&gt;<i> &gt; <A HREF="http://trac.mondorescue.org/changeset/2085">http://trac.mondorescue.org/changeset/2085</A>)
+</I>&gt;<i> 
+</I>&gt;<i> mondo-2.2.8 is running on my server (the 2085 revision is included) but the problem is present yet.
+</I>&gt;<i> See  mondorestore.log  attached.
+</I>
+Humm. 
+
+&gt;<i> In attach the module &quot;libmondo-cli.c&quot; in my installation.
+</I>&gt;<i> I think that &quot;touch /boot/boot.b&quot; is executed because the
+</I>&gt;<i> __freeBSD__ is not defined and my archtecture is __IA64, so the branch is executed:
+</I>&gt;<i>        
+</I>&gt;<i> #ifndef __FreeBSD__
+</I>&gt;<i>         if ((!is_this_a_valid_disk_format(&quot;vfat&quot;)) &amp;&amp; (! bkpinfo-&gt;restore_data)) {
+</I>&gt;<i> ...................
+</I>&gt;<i> ...................     
+</I>&gt;<i> #ifdef __IA64__
+</I>&gt;<i>         /* We force ELILO usage on IA64 */
+</I>&gt;<i>         bkpinfo-&gt;make_cd_use_lilo = TRUE;
+</I>&gt;<i> 
+</I>&gt;<i>         if (bkpinfo-&gt;make_cd_use_lilo &amp;&amp; !does_file_exist(&quot;/boot/boot.b&quot;)) {
+</I>&gt;<i>                 paranoid_system(&quot;touch /boot/boot.b&quot;);
+</I>&gt;<i>         }
+</I>&gt;<i> #endif
+</I>
+That code changed in r2134 (Cf:
+<A HREF="http://trac.mondorescue.org/changeset/2134">http://trac.mondorescue.org/changeset/2134</A>)
+
+I'll produce a beta for you to test. Hopefully that should really be
+gone now.
+
+&gt;<i> The variable $ARCH in LounchTerminals is not set. See below. Probably it is due to the fact that $ARCH is set in a function (WelcomeMessage) not in the main.
+</I>
+Arggh!
+Changed again then in r2163 (Cf:
+<A HREF="http://trac.mondorescue.org/changeset/2163">http://trac.mondorescue.org/changeset/2163</A>)
+
+&gt;<i> &gt; Oh, oh ! Bug here. Fixed in rev 2157
+</I>&gt;<i> &gt; <A HREF="http://trac.mondorescue.org/changeset/2157">http://trac.mondorescue.org/changeset/2157</A>
+</I>&gt;<i> 
+</I>&gt;<i> I have apply the modification at the Makefile.am like in changeset 2157 but the script &quot;format-and-kludge-vfat&quot; is not present when mondorestore launch it
+</I>
+Humm. It's working for me locally:
+$ rpm -qlp &gt; /users/bruno/pb/projects/mondorescue/build/RPMS/x86_64/mondo-2.2.9-1.mdv2009.0.x86_64.rpm | grep kludge
+/usr/share/mondo/restore-scripts/mondo/format-and-kludge-vfat
+
+Please re-test with the version I'll provide to you.
+
+&gt;<i> The beta 2.2.9 version is only for redhat 5 ?
+</I>
+It's for what I decide ;-) 
+
+&gt;<i> I am working on red hat 4.7 now. However I have applied the changes above (changeset 2157, 2158)to 2.2.8 mondo version
+</I>
+I can provide to you a beta for rhel4 without issue.
+It's now at <A HREF="ftp://ftp.mondorescue.org/test/rhel/4">ftp://ftp.mondorescue.org/test/rhel/4</A>
+
+&gt;<i> a
+</I>&gt;<i> 00
+</I>&gt;<i> part=00
+</I>
+Ok, so mondorestore doesn't pass the correct value to parted2fdisk. It's
+clear from that log portion :-(
+I need to find why if you can call it with -K99 that may help.
+
+Thanks again,
+Bruno.
+-- 
+Linux Profession Lead EMEA  / Open Source Ambassador \   EMEA CME Sol. Center
+<A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000055.html">[Mondorescue-ia64] R: R: R: R: R: R: R: Recovery from tapeKO(OBDR)
+</A></li>
+	<LI>Next message: <A HREF="000057.html">[Mondorescue-ia64] R: R: R: R: R: R: R: R: Recovery fromtapeKO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#56">[ date ]</a>
+              <a href="thread.html#56">[ thread ]</a>
+              <a href="subject.html#56">[ subject ]</a>
+              <a href="author.html#56">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

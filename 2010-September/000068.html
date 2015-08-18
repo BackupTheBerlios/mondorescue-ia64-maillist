@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] Itanium
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Itanium&In-Reply-To=%3C20100908153114.GN31934%40morley.gre.hp.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000067.html">
+   <LINK REL="Next"  HREF="000069.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] Itanium</H1>
+    <B>Bruno Cornec</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20Itanium&In-Reply-To=%3C20100908153114.GN31934%40morley.gre.hp.com%3E"
+       TITLE="[Mondorescue-ia64] Itanium">Bruno.Cornec at hp.com
+       </A><BR>
+    <I>Wed Sep  8 17:31:14 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000067.html">[Mondorescue-ia64] Itanium
+</A></li>
+        <LI>Next message: <A HREF="000069.html">[Mondorescue-ia64] Fwd:  Itanium
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#68">[ date ]</a>
+              <a href="thread.html#68">[ thread ]</a>
+              <a href="subject.html#68">[ subject ]</a>
+              <a href="author.html#68">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+Piet Pompies said on Wed, Sep 08, 2010 at 03:08:23PM +0200:
+
+&gt;<i> Hi All, I have used mondoarchive for backup and restore on a few server at
+</I>&gt;<i> our company with no problems. But I am trying to get it running on a HP
+</I>&gt;<i> Itanium ia64 kernel, and can't seem to come right. I have used rpms but
+</I>&gt;<i> can't find ia64 version for buffer even tried using the mondorescue.repo for
+</I>&gt;<i> yum but when I install the dependencies : afio, mindi, buffer ..... etc.
+</I>&gt;<i> then it installs the i386 version instead of the ia64 version.
+</I>
+There is no pre-builder rpm package for RHEL5 :-(
+
+So you need to use <A HREF="ftp://ftp.mondorescue.org/src/afio-2.4.7-1.src.rpm">ftp://ftp.mondorescue.org/src/afio-2.4.7-1.src.rpm</A>
+and <A HREF="ftp://ftp.mondorescue.org/src/buffer-1.19-1.src.rpm">ftp://ftp.mondorescue.org/src/buffer-1.19-1.src.rpm</A> in order to
+build the on ia64 (using receipt at
+<A HREF="http://trac.mondorescue.org/wiki/DistributionPackaging#RPMrebuildprocess">http://trac.mondorescue.org/wiki/DistributionPackaging#RPMrebuildprocess</A>)
+
+Now there is a remaining issue on ia64 mondo concerning the Newt
+interface used with the keyboard that I need to solve ASAP.
+
+HTH,
+Bruno.
+-- 
+Open Source &amp; Linux Profession Lead EMEA           / <A HREF="http://opensource.hp.com">http://opensource.hp.com</A>
+HP/Intel/Red Hat Open Source Solutions Initiative  / <A HREF="http://www.hpintelco.net">http://www.hpintelco.net</A>
+<A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>  <A HREF="http://mondorescue.org">http://mondorescue.org</A> <A HREF="http://project-builder.org">http://project-builder.org</A>
+La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000067.html">[Mondorescue-ia64] Itanium
+</A></li>
+	<LI>Next message: <A HREF="000069.html">[Mondorescue-ia64] Fwd:  Itanium
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#68">[ date ]</a>
+              <a href="thread.html#68">[ thread ]</a>
+              <a href="subject.html#68">[ subject ]</a>
+              <a href="author.html#68">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>

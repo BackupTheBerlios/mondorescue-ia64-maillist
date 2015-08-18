@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mondorescue-ia64/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B019CFD7B%40BESONE.corp.dom%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000050.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)</H1>
+    <B>Grassi Giuseppe</B> 
+    <A HREF="mailto:mondorescue-ia64%40lists.berlios.de?Subject=Re%3A%20%5BMondorescue-ia64%5D%20R%3A%20R%3A%20R%3A%20%20R%3A%20%20R%3A%20Recovery%20from%20tape%20KO%28OBDR%29&In-Reply-To=%3C81FB9FBE83D9134AAC7D9884ACDF130B019CFD7B%40BESONE.corp.dom%3E"
+       TITLE="[Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)">giuseppe.grassi2 at italtel.it
+       </A><BR>
+    <I>Tue Feb  3 20:21:20 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000050.html">[Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#49">[ date ]</a>
+              <a href="thread.html#49">[ thread ]</a>
+              <a href="subject.html#49">[ subject ]</a>
+              <a href="author.html#49">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I am continuing the tests...I have discovered that there is a problem in the calculation of the dimension of the partitions. The problem is present on Itanium environment but is not present on x86 environment. 
+
+On Itanium environment the script /usr/sbin/mindi, runs &quot;parted2fdisk&quot; perl script to get the partition size informations but there aren't information returned. 
+
+In /usr/sbin/mindi, at the line 1984 the parted2fdisk is run:
+/usr/sbin/parted2fdisk -s /dev/cciss/c0d0
+
+Executing the same command in a shell, no information is returned:
+# /usr/sbin/parted2fdisk -s /dev/cciss/c0d0
+#
+
+On x86 environment, instead function, the disk size is returned: 
+# /usr/sbin/parted2fdisk -s /dev/cciss/c0d0
+71126640
+
+I have discovered that the script &quot;parted2fdisk.pl&quot;, is not used in x86 environment. parted2fdisk is a link to /sbin/fdisk command:
+&quot;lrwxrwxrwx  1 root root    11 11 lug  2008 /usr/sbin/parted2fdisk -&gt; /sbin/fdisk&quot;
+so, when /usr/sbin/mindi script runs: 
+/usr/sbin/parted2fdisk -s /dev/cciss/c0d0
+
+really runs &quot;/sbin/fdisk -s /dev/cciss/c0d0&quot;
+
+I have tried to run the same command on Itanium environment and ....great.. it is correct: 
+# /sbin/fdisk -s /dev/cciss/c0d0
+
+WARNING: GPT (GUID Partition Table) detected on '/dev/cciss/c0d0'! The util fdisk doesn't support GPT. Use GNU Parted.
+
+143338560
+
+So I have modified the script /usr/sbin/mindi at line 1984:
+res=`$FDISK -s $device 2&gt;&gt; $LOGFILE`		(old line)
+res=`/sbin/fdisk -s $device 2&gt;&gt; $LOGFILE`		(new line)
+and now the restore operation is able to partitioning the disk.
+
+There is other little errors: 
+
+/usr/lib/mindi/analyze-my-lvm  at the line 236:
+lvmversion=`lvmdiskscan --help 2&gt;&amp;1 |     (--help option is not correct)
+lvmversion=`lvmdiskscan --version 2&gt;&amp;1 |   (correct line)
+
+/usr/sbin/mindi at the line 726:
+vdf -P | grep -E '/vmfs/volumes' | awk '{print $1}'   (wrong command vdf)
+df -P | grep -E '/vmfs/volumes' | awk '{print $1}'    (correct line)
+
+
+It is possble to eliminate the warning strings printed by /parted2fdisk:
+Use of uninitialized value in formline at /sbin/parted2fdisk line 369.
+Use of uninitialized value in formline at /sbin/parted2fdisk line 359.
+Use of uninitialized value in formline at /sbin/parted2fdisk line 359.
+removing &quot;-w&quot; option in the first line of the script:
+ 
+#!/usr/bin/perl -w  
+Giuseppe
+
+&gt;<i> Da: Bruno Cornec [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">Bruno.Cornec at hp.com</A>] 
+</I>&gt;<i> Inviato: gioved&#236; 22 gennaio 2009 9.12
+</I>&gt;<i> A: Grassi Giuseppe
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">mondorescue-ia64 at lists.berlios.de</A>
+</I>&gt;<i> Oggetto: Re: R: R: [Mondorescue-ia64] R: R: Recovery from 
+</I>&gt;<i> tape KO(OBDR)
+</I>&gt;<i> 
+</I>&gt;<i> Grassi Giuseppe said on Wed, Jan 21, 2009 at 04:26:54PM +0100:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; &gt; &gt; Use of uninitialized value in pattern match (m//) at
+</I>&gt;<i> &gt; &gt; /usr/sbin/parted2fdisk line 514, &lt;PARTED&gt; line 1.
+</I>&gt;<i> 
+</I>&gt;<i> Sorry, I still do not understand :-(
+</I>&gt;<i> 
+</I>&gt;<i> &gt; # parted -s /dev/cciss/c0d0 print  (on Itanium RedHat ES 
+</I>&gt;<i> 4.7 (2.6.9-78.EL))
+</I>&gt;<i> 
+</I>&gt;<i> I already took in account RHEL4 sorry for that (thought we 
+</I>&gt;<i> were speaking
+</I>&gt;<i> of rhel5). But I never tried myself with LVM so that may be the reason
+</I>&gt;<i> why I've not handled that correctly.
+</I>&gt;<i> 
+</I>&gt;<i> I tried to give your parted result to my script and had no 
+</I>&gt;<i> warning on my
+</I>&gt;<i> side :-(
+</I>&gt;<i> 
+</I>&gt;<i> And in the log you provided, there is mention of a RESTORE label
+</I>&gt;<i> created.
+</I>&gt;<i> 
+</I>&gt;<i> So I think I really need to try duplicating your environment 
+</I>&gt;<i> in order to
+</I>&gt;<i> understand what happens, as nothing in your logs is driving me to the
+</I>&gt;<i> point which is creating a problem.
+</I>&gt;<i> 
+</I>&gt;<i> Bruno.
+</I>&gt;<i> -- 
+</I>&gt;<i> Linux Profession Lead EMEA  / Open Source Evangelist \        
+</I>&gt;<i> HP C&amp;I EMEA IET
+</I>&gt;<i> <A HREF="http://www.mondorescue.org">http://www.mondorescue.org</A> / HP/Intel Solution Center \  
+</I>&gt;<i> <A HREF="http://hpintelco.net">http://hpintelco.net</A>
+</I>&gt;<i> Des infos sur Linux?  <A HREF="http://www.HyPer-Linux.org">http://www.HyPer-Linux.org</A>      
+</I>&gt;<i> <A HREF="http://www.hp.com/linux">http://www.hp.com/linux</A>
+</I>&gt;<i> La musique ancienne?  <A HREF="http://www.musique-ancienne.org">http://www.musique-ancienne.org</A> 
+</I>&gt;<i> <A HREF="http://www.medieval.org">http://www.medieval.org</A>
+</I>&gt;<i> 
+</I>
+
+Internet Email Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+-----------------------------------------------------------------------------------------------------
+
+Internet E. Mail Confidentiality Footer
+-----------------------------------------------------------------------------------------------------
+La presente comunicazione, con le informazioni in essa contenute e ogni documento o file allegato, e' rivolta unicamente alla/e persona/e cui e' indirizzata ed alle altre da questa autorizzata/e a riceverla. Se non siete i destinatari/autorizzati siete avvisati che qualsiasi azione, copia, comunicazione, divulgazione o simili basate sul contenuto di tali informazioni e' vietata e potrebbe essere contro la legge (art. 616 C.P., D.Lgs n. 196/2003 Codice in materia di protezione dei dati personali). Se avete ricevuto questa comunicazione per errore, vi preghiamo di darne immediata notizia al mittente e di distruggere il messaggio originale e ogni file allegato senza farne copia alcuna o riprodurne in alcun modo il contenuto. 
+
+This e-mail and its attachments are intended for the addressee(s) only and are confidential and/or may contain legally privileged information. If you have received this message by mistake or are not one of the addressees above, you may take no action based on it, and you may not copy or show it to anyone; please reply to this e-mail and point out the error which has occurred. 
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000050.html">[Mondorescue-ia64] R: R: R:  R:  R: Recovery from tape KO(OBDR)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#49">[ date ]</a>
+              <a href="thread.html#49">[ thread ]</a>
+              <a href="subject.html#49">[ subject ]</a>
+              <a href="author.html#49">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mondorescue-ia64">More information about the Mondorescue-ia64
+mailing list</a><br>
+</body></html>
